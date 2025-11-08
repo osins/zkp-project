@@ -293,6 +293,18 @@ Contributions are welcome! Please follow these steps:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
+## 📖 Related Documentation
+
+- [Full Documentation](README.md) | [简体中文](README_CN.md)
+- [Quick Start](QUICKSTART.md) | [快速开始](QUICKSTART_CN.md)
+- [Project Structure](STRUCTURE.md) | [项目结构](STRUCTURE_CN.md)
+- [Command Reference](COMMANDS.md) | [命令参考](COMMANDS_CN.md)
+- [Project Summary](PROJECT_SUMMARY.md) | [项目总结](PROJECT_SUMMARY_CN.md)
+- [Validation Analysis](VALIDATION_ANALYSIS.md) | [验证分析](VALIDATION_ANALYSIS_CN.md)
+- [Circom Official Docs](https://docs.circom.io/)
+- [snarkjs Guide](https://github.com/iden3/snarkjs)
+- [Halo2 Tutorial](https://zcash.github.io/halo2/)
+
 ## 🙏 Acknowledgments
 
 - [Halo2](https://github.com/zcash/halo2) - Zcash team

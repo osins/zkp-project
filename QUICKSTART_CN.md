@@ -1,50 +1,48 @@
-# 🚀 Quick Start Guide
+# 🚀 快速启动指南
 
-Experience the complete ZKP workflow in 5 minutes!
+5 分钟快速体验完整的 ZKP 工作流程！
 
-English | [简体中文](QUICKSTART_CN.md)
-
-## ⚡ One-Click Install and Run
+## ⚡ 一键安装与运行
 
 ```bash
-# 1. Clone project (if needed)
+# 1. 克隆项目（如果需要）
 # git clone <your-repo-url>
 cd zkp-project
 
-# 2. Automatically install all dependencies
+# 2. 自动安装所有依赖
 bash scripts/setup.sh
 
-# 3. Run complete demonstration
+# 3. 运行完整演示
 bash scripts/demo.sh
 ```
 
-## 📝 Step-by-Step Guide
+## 📝 分步指南
 
-### Step 1: Build Circom Circuit
+### 步骤 1：构建 Circom 电路
 
 ```bash
 cd circom-circuits
 npm run build
 ```
 
-**Output Files:**
-- ✅ `build/example.r1cs` - Circuit constraints
+**输出文件：**
+- ✅ `build/example.r1cs` - 电路约束
 - ✅ `build/example_final.zkey` - Proving key
 - ✅ `build/verification_key.json` - Verification key
 - ✅ `build/Verifier.sol` - Solidity verifier
 
-**Estimated Time:** 2-5 minutes (first time needs to download Powers of Tau)
+**预计时间：** 2-5 分钟（首次需下载 Powers of Tau）
 
 ---
 
-### Step 2: Generate Zero-Knowledge Proof
+### 步骤 2：生成零知识证明
 
 ```bash
 cd node-sdk
 npm run generate-proof
 ```
 
-**Example Output:**
+**示例输出：**
 ```
 🔐 Generating zero-knowledge proof...
 📥 Input: { a: 3, b: 11 }
@@ -55,19 +53,19 @@ npm run generate-proof
 💾 Proof saved to ../../circom-circuits/build/generated_proof.json
 ```
 
-**Generated Files:**
+**生成的文件：**
 - `build/generated_proof.json`
 - `build/generated_calldata.txt`
 
 ---
 
-### Step 3: Off-chain Verification
+### 步骤 3：链下验证
 
 ```bash
 npm run verify-proof
 ```
 
-**Example Output:**
+**示例输出：**
 ```
 🔍 Verifying proof off-chain...
 
@@ -85,21 +83,21 @@ npm run verify-proof
 
 ---
 
-### Step 4: Deploy Smart Contracts
+### 步骤 4：部署智能合约
 
-**Start local Hardhat node (Terminal 1):**
+**启动本地 Hardhat 节点（终端 1）：**
 ```bash
 cd smart-contracts
 npx hardhat node
 ```
 
-**Deploy contracts (Terminal 2):**
+**部署合约（终端 2）：**
 ```bash
 cd smart-contracts
 npm run deploy:localhost
 ```
 
-**Example Output:**
+**示例输出：**
 ```
 🚀 Deploying ZKP Contracts...
 
@@ -118,13 +116,13 @@ ZKP Application:  0xe7f17...
 
 ---
 
-### Step 5: On-chain Verification
+### 步骤 5：链上验证
 
 ```bash
 node scripts/verify-on-chain.js
 ```
 
-**Example Output:**
+**示例输出：**
 ```
 🔗 On-chain Proof Verification Script
 
@@ -145,71 +143,71 @@ node scripts/verify-on-chain.js
 
 ---
 
-## 🎯 Complete Workflow Summary
+## 🎯 完整工作流总结
 
-| Step | Command | Output | Time |
-|------|---------|---------|------|
-| 1. Build Circuit | `npm run build` | zkey, vkey, Verifier.sol | 2-5 min |
-| 2. Generate Proof | `npm run generate-proof` | proof.json | 5-10 sec |
-| 3. Off-chain Verify | `npm run verify-proof` | ✅/❌ | <1 sec |
-| 4. Deploy Contracts | `npm run deploy:localhost` | Contract address | 5-10 sec |
-| 5. On-chain Verify | `node verify-on-chain.js` | Transaction receipt | 2-5 sec |
+| 步骤 | 命令 | 输出 | 时间 |
+|------|------|------|------|
+| 1. 构建电路 | `npm run build` | zkey, vkey, Verifier.sol | 2-5 min |
+| 2. 生成证明 | `npm run generate-proof` | proof.json | 5-10 sec |
+| 3. 链下验证 | `npm run verify-proof` | ✅/❌ | <1 sec |
+| 4. 部署合约 | `npm run deploy:localhost` | Contract address | 5-10 sec |
+| 5. 链上验证 | `node verify-on-chain.js` | Transaction receipt | 2-5 sec |
 
 ---
 
-## 🧪 Test Commands
+## 🧪 测试命令
 
 ```bash
-# Test Rust WASM prover
+# 测试 Rust WASM prover
 cd rust-prover
-node test/test-wasm.js      # Complete test (15 tests)
-node test/test-simple.js    # Quick test
+node test/test-wasm.js      # 完整测试（15个测试）
+node test/test-simple.js    # 快速测试
 
-# Test Circom circuit
+# 测试 Circom 电路
 cd circom-circuits && npm run test
 
-# Test smart contracts
+# 测试智能合约
 cd smart-contracts && npx hardhat test
 
-# Run all tests
+# 运行所有测试
 npm run test:all
 ```
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 故障排除
 
 ### ❌ "Circuit files not found"
-**Solution:**
+**解决方案：**
 ```bash
 cd circom-circuits
 npm run build
 ```
 
 ### ❌ "Verifier contract not deployed"
-**Solution:**
-1. Ensure Hardhat node is running
-2. Redeploy contracts:
+**解决方案：**
+1. 确保 Hardhat 节点运行中
+2. 重新部署合约：
 ```bash
 cd smart-contracts
 npm run deploy:localhost
 ```
 
 ### ❌ "Powers of Tau download failed"
-**Solution:**
-Manual download:
+**解决方案：**
+手动下载：
 ```bash
 cd circom-circuits/build
 wget https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_12.ptau
 ```
 
-### ❌ Rust compilation error
-**Solution:**
+### ❌ Rust 编译错误
+**解决方案：**
 ```bash
-# Ensure wasm-pack is installed
+# 确保 wasm-pack 已安装
 cargo install wasm-pack
 
-# Clean and rebuild
+# 清理并重新构建
 cd rust-prover
 cargo clean
 wasm-pack build --target nodejs
@@ -217,52 +215,52 @@ wasm-pack build --target nodejs
 
 ---
 
-## 📚 Advanced Usage
+## 📚 进阶使用
 
-### Custom Circuit Input
+### 自定义电路输入
 
-Edit `node-sdk/scripts/generateProof.ts`:
+编辑 `node-sdk/scripts/generateProof.ts`：
 
 ```typescript
 const input = {
-    a: 7,    // Modify here
-    b: 9     // Modify here
+    a: 7,    // 修改这里
+    b: 9     // 修改这里
 };
-// Expected output: c = 63
+// 预期输出：c = 63
 ```
 
-### Deploy to Testnet
+### 部署到测试网
 
-1. Edit `smart-contracts/.env`:
+1. 编辑 `smart-contracts/.env`：
 ```env
 SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_KEY
 PRIVATE_KEY=0x...
 ```
 
-2. Deploy:
+2. 部署：
 ```bash
 npm run deploy:sepolia
 ```
 
-### Start Backend API
+### 启动 Backend API
 
 ```bash
 cd backend
 npm run dev
 
-# API endpoints:
+# API 端点：
 # POST http://localhost:3000/api/proof/generate
 # POST http://localhost:3000/api/proof/verify
 ```
 
-**Example API Call:**
+**示例 API 调用：**
 ```bash
 curl -X POST http://localhost:3000/api/proof/generate \
   -H "Content-Type: application/json" \
   -d '{"input": {"a": 3, "b": 11}}'
 ```
 
-### Test Rust WASM
+### 测试 Rust WASM
 
 ```bash
 cd rust-prover
@@ -272,28 +270,28 @@ node test/test-wasm.js
 
 ---
 
-## 🎓 Learning Path
+## 🎓 学习路径
 
-1. **Beginners**: Run `bash scripts/demo.sh` to understand the complete workflow
-2. **Intermediate**: Modify `example.circom` to implement custom logic
-3. **Advanced**: Integrate Halo2 Rust prover, optimize performance
-
----
-
-## 📖 Related Documentation
-
-- [Full Documentation](README.md)
-- [Project Structure](STRUCTURE.md)
-- [Circom Official Docs](https://docs.circom.io/)
-- [snarkjs Guide](https://github.com/iden3/snarkjs)
-- [Halo2 Tutorial](https://zcash.github.io/halo2/)
+1. **初学者**：运行 `bash scripts/demo.sh`，理解完整流程
+2. **中级**：修改 `example.circom`，实现自定义逻辑
+3. **高级**：集成 Halo2 Rust prover，优化性能
 
 ---
 
-## 🆘 Getting Help
+## 📖 相关文档
 
-- GitHub Issues: [Submit Issue](#)
-- Discord: [Join Community](#)
+- [完整文档](README.md)
+- [项目结构](STRUCTURE.md)
+- [Circom 官方文档](https://docs.circom.io/)
+- [snarkjs 指南](https://github.com/iden3/snarkjs)
+- [Halo2 教程](https://zcash.github.io/halo2/)
+
+---
+
+## 🆘 获取帮助
+
+- GitHub Issues: [提交问题](#)
+- Discord: [加入社区](#)
 - Email: support@zkp-project.io
 
 ---

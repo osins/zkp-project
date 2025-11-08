@@ -1,76 +1,78 @@
-# 📝 更新日志
+# 📝 Changelog
+
+English | [简体中文](CHANGELOG_CN.md)
 
 ## [1.0.0] - 2025-11-08
 
-### ✨ 新增功能
-- ✅ 完整的 WASM 零知识证明模块
-- ✅ Halo2 SquareCircuit 实现 (y = x²)
-- ✅ WASM 绑定接口 (`wasm_generate_proof`, `wasm_verify_proof`)
-- ✅ 完整的测试套件（15 个测试用例）
-- ✅ 详细的文档和示例
+### ✨ New Features
+- ✅ Complete WASM zero-knowledge proof module
+- ✅ Halo2 SquareCircuit implementation (y = x²)
+- ✅ WASM binding interfaces (`wasm_generate_proof`, `wasm_verify_proof`)
+- ✅ Complete test suite (15 test cases)
+- ✅ Detailed documentation and examples
 
-### 🔧 修复
-- ✅ 修复 `Fp` 类型引用问题
-- ✅ 修复 WASM 编译的 `getrandom` 配置
-- ✅ 修复实例数组格式错误（从 3D 改为 2D）
-- ✅ 添加 `console_error_panic_hook` 用于更好的错误信息
-- ✅ 优化参数大小（k=4 -> k=8）
+### 🔧 Fixes
+- ✅ Fixed `Fp` type reference issues
+- ✅ Fixed `getrandom` configuration for WASM compilation
+- ✅ Fixed instance array format error (changed from 3D to 2D)
+- ✅ Added `console_error_panic_hook` for better error messages
+- ✅ Optimized parameter size (k=4 -> k=8)
 
-### 📁 项目结构重组
-- ✅ 创建 `test/` 目录统一管理所有测试文件
-- ✅ 移动所有测试相关文件到 `test/` 目录
-- ✅ 添加完整的 README 文档
-- ✅ 添加 `.gitignore` 配置
+### 📁 Project Structure Reorganization
+- ✅ Created `test/` directory to centrally manage all test files
+- ✅ Moved all test-related files to `test/` directory
+- ✅ Added complete README documentation
+- ✅ Added `.gitignore` configuration
 
-### 📊 测试结果
+### 📊 Test Results
 ```
-✅ 通过测试: 15/15 (100%)
-❌ 失败测试: 0
+✅ Passed tests: 15/15 (100%)
+❌ Failed tests: 0
 ```
 
-### 📖 文档
-- ✅ README.md - 项目主文档
-- ✅ test/README.md - 测试套件说明和快速开始
-- ✅ test/WASM_TEST_SUCCESS.md - 测试报告
+### 📖 Documentation
+- ✅ README.md - Main project documentation
+- ✅ test/README.md - Test suite documentation and quick start
+- ✅ test/WASM_TEST_SUCCESS.md - Test report
 
-### 🎯 性能指标
-- 证明生成: ~840 ms
-- 证明验证: ~600 ms
-- 证明大小: 1312 字节
-- WASM 大小: 746 KB
+### 🎯 Performance Metrics
+- Proof generation: ~840 ms
+- Proof verification: ~600 ms
+- Proof size: 1312 bytes
+- WASM size: 746 KB
 
-### 📦 文件清单
+### 📦 File List
 
-#### 源代码
-- `src/lib.rs` - WASM 接口和核心逻辑
-- `src/circuit.rs` - Halo2 电路定义
+#### Source Code
+- `src/lib.rs` - WASM interface and core logic
+- `src/circuit.rs` - Halo2 circuit definition
 
-#### 测试文件
-- `test/test-wasm.js` - 完整测试套件（15个测试）
-- `test/test-simple.js` - 简单调试测试
-- `test/test-results.txt` - 测试输出结果
+#### Test Files
+- `test/test-wasm.js` - Complete test suite (15 tests)
+- `test/test-simple.js` - Simple debugging test
+- `test/test-results.txt` - Test output results
 
-#### 文档
-- `README.md` - 项目主文档
-- `test/README.md` - 测试说明和快速开始
-- `test/WASM_TEST_SUCCESS.md` - 测试报告
-- `CHANGELOG.md` - 本文件
+#### Documentation
+- `README.md` - Main project documentation
+- `test/README.md` - Test documentation and quick start
+- `test/WASM_TEST_SUCCESS.md` - Test report
+- `CHANGELOG.md` - This file
 
-#### 配置
-- `Cargo.toml` - Rust 依赖配置
-- `.gitignore` - Git 忽略规则
-- `build_wasm.sh` - 构建脚本
+#### Configuration
+- `Cargo.toml` - Rust dependencies configuration
+- `.gitignore` - Git ignore rules
+- `build_wasm.sh` - Build script
 
-### 🚀 使用方法
+### 🚀 Usage
 
 ```bash
-# 编译
+# Compile
 wasm-pack build --target nodejs
 
-# 测试
+# Test
 node test/test-wasm.js
 
-# 使用
+# Use
 const { wasm_generate_proof, wasm_verify_proof } = require('./pkg/rust_prover.js');
 const proof = wasm_generate_proof(42);
 const isValid = wasm_verify_proof(proof);
@@ -78,20 +80,20 @@ const isValid = wasm_verify_proof(proof);
 
 ---
 
-## 未来计划
+## Future Plans
 
-### v1.1.0 (计划中)
-- [ ] 支持更复杂的电路（Merkle 树、签名验证）
-- [ ] 优化 WASM 体积
-- [ ] 添加批量验证支持
-- [ ] 浏览器端测试
+### v1.1.0 (Planned)
+- [ ] Support more complex circuits (Merkle tree, signature verification)
+- [ ] Optimize WASM size
+- [ ] Add batch verification support
+- [ ] Browser-side testing
 
-### v1.2.0 (计划中)
-- [ ] 并行证明生成
-- [ ] 性能优化
-- [ ] 更多示例代码
-- [ ] 集成测试
+### v1.2.0 (Planned)
+- [ ] Parallel proof generation
+- [ ] Performance optimization
+- [ ] More example code
+- [ ] Integration testing
 
 ---
 
-**✨ v1.0.0 已发布！所有功能正常工作！**
+**✨ v1.0.0 released! All features working properly!**

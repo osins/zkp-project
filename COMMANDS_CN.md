@@ -1,8 +1,6 @@
-# 🎯 Command Reference Manual
+# 🎯 命令参考手册
 
-English | [简体中文](COMMANDS_CN.md)
-
-Complete list of commands organized by module.
+完整的命令列表，按模块分类。
 
 ---
 

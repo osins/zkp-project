@@ -1,44 +1,46 @@
-# 🧪 WASM 零知识证明测试套件
+# 🧪 WASM Zero-Knowledge Proof Test Suite
 
-本目录包含 Rust WASM 零知识证明模块的完整测试套件和文档。
+This directory contains the complete test suite and documentation for the Rust WASM zero-knowledge proof module.
+
+English | [简体中文](README_CN.md)
 
 ---
 
-## 📁 目录结构
+## 📁 Directory Structure
 
 ```
 test/
-├── test-wasm.js              # ⭐ 完整测试套件（15个测试）
-├── test-simple.js            # 🔍 简单调试测试
-├── test-results.txt          # 📊 最新测试输出结果
-├── README.md                 # 📖 本文件 - 测试套件说明
-└── WASM_TEST_SUCCESS.md      # 📋 详细测试报告
+├── test-wasm.js              # ⭐ Complete test suite (15 tests)
+├── test-simple.js            # 🔍 Simple debugging test
+├── test-results.txt          # 📊 Latest test output results
+├── README.md                 # 📖 This file - Test suite documentation
+└── WASM_TEST_SUCCESS.md      # 📋 Detailed test report
 ```
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 运行测试
+### Running Tests
 
 ```bash
-# 从项目根目录运行完整测试
+# Run complete test from project root
 cd rust-prover
 node test/test-wasm.js
 
-# 运行简单测试
+# Run simple test
 node test/test-simple.js
 ```
 
-**预期输出：**
+**Expected Output:**
 ```
-🎉 所有测试通过！WASM 模块工作正常！
-✅ 通过测试: 15
-❌ 失败测试: 0
-📈 成功率: 100.00%
+🎉 All tests passed! WASM module is working correctly!
+✅ Passed tests: 15
+❌ Failed tests: 0
+📈 Success rate: 100.00%
 ```
 
-### 编译 WASM
+### Compile WASM
 
 ```bash
 cd rust-prover
@@ -47,73 +49,73 @@ wasm-pack build --target nodejs
 
 ---
 
-## 📊 测试概览
+## 📊 Test Overview
 
-### test-wasm.js - 完整测试套件 ⭐
+### test-wasm.js - Complete Test Suite ⭐
 
-**15 个测试用例，覆盖：**
+**15 test cases covering:**
 
-1. **证明生成功能** (6 个测试)
-   - ✅ 常规输入值测试 (5, 10, 42, 100)
-   - ✅ 边界值测试 (0, 1)
+1. **Proof Generation Functionality** (6 tests)
+   - ✅ Regular input value tests (5, 10, 42, 100)
+   - ✅ Boundary value tests (0, 1)
 
-2. **证明验证功能** (6 个测试)
-   - ✅ 验证所有生成的证明
+2. **Proof Verification Functionality** (6 tests)
+   - ✅ Verify all generated proofs
 
-3. **安全性测试** (2 个测试)
-   - ✅ 篡改证明拒绝测试
-   - ✅ 空数据拒绝测试
+3. **Security Tests** (2 tests)
+   - ✅ Tampered proof rejection test
+   - ✅ Empty data rejection test
 
-4. **性能测试** (1 个测试)
-   - ✅ 基准测试（5轮重复）
+4. **Performance Test** (1 test)
+   - ✅ Benchmark test (5 rounds repetition)
 
-**测试结果：**
+**Test Results:**
 ```
-✅ 通过测试: 15
-❌ 失败测试: 0
-📈 成功率: 100.00%
-```
-
----
-
-### test-simple.js - 简单测试 🔍
-
-最小化的测试脚本，用于：
-- 快速验证基本功能
-- 调试问题
-- 获取详细错误堆栈
-
-**示例输出：**
-```
-测试 WASM 模块...
-
-步骤 1: 生成证明，输入值 = 5
-✅ 证明生成成功
-证明大小: 1312 字节
-
-步骤 2: 验证证明
-验证结果: ✅ 有效
+✅ Passed tests: 15
+❌ Failed tests: 0
+📈 Success rate: 100.00%
 ```
 
 ---
 
-## 💡 使用示例
+### test-simple.js - Simple Test 🔍
 
-### 基本用法
+Minimal test script used for:
+- Quick basic functionality verification
+- Debugging issues
+- Getting detailed error stack
+
+**Example Output:**
+```
+Testing WASM module...
+
+Step 1: Generate proof, input value = 5
+✅ Proof generated successfully
+Proof size: 1312 bytes
+
+Step 2: Verify proof
+Verification result: ✅ Valid
+```
+
+---
+
+## 💡 Usage Examples
+
+### Basic Usage
 
 ```javascript
 const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
 
-// 生成证明
+// Generate proof
 const proof = wasm_generate_proof(42);
-console.log('证明大小:', proof.length); // 1312 字节
+console.log('Proof size:', proof.length); // 1312 bytes
 
-// 验证证明
+// Verify proof
 const isValid = wasm_verify_proof(proof);
-console.log('有效:', isValid); // true
+console.log('Valid:', isValid); // true
 ```
 
-### 错误处理
+### Error Handling
 
 ```javascript
 const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
@@ -122,357 +124,201 @@ try {
     const proof = wasm_generate_proof(100);
     
     if (wasm_verify_proof(proof)) {
-        console.log('✅ 证明有效');
+        console.log('✅ Proof is valid');
     } else {
-        console.log('❌ 证明无效');
+        console.log('❌ Proof is invalid');
     }
 } catch (error) {
-    console.error('错误:', error.message);
+    console.error('Error:', error.message);
 }
 ```
 
-### 篡改检测
+### Tamper Detection
 
 ```javascript
 const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
 
-// 生成有效证明
+// Generate valid proof
 const validProof = wasm_generate_proof(42);
-console.log('有效证明:', wasm_verify_proof(validProof)); // true
+console.log('Valid proof:', wasm_verify_proof(validProof)); // true
 
-// 篡改证明
+// Tamper with proof
 const tamperedProof = new Uint8Array(validProof);
 tamperedProof[0] = tamperedProof[0] ^ 0xFF;
 
-console.log('篡改证明:', wasm_verify_proof(tamperedProof)); // false
+console.log('Tampered proof:', wasm_verify_proof(tamperedProof)); // false
 ```
 
 ---
 
-## 📈 性能指标
+## 📈 Performance Metrics
 
-| 操作 | 平均耗时 | 数据大小 |
-|------|---------|---------|
-| 证明生成 | ~840 ms | 1312 字节 |
-| 证明验证 | ~600 ms | - |
-| WASM 模块 | - | 746 KB |
+| Operation | Average Time | Data Size |
+|-----------|--------------|-----------|
+| Proof Generation | ~840 ms | 1312 bytes |
+| Proof Verification | ~600 ms | - |
+| WASM Module | - | 746 KB |
 
 ---
 
-## 📖 相关文档
+## 📖 Related Documentation
 
 ### WASM_TEST_SUCCESS.md
-- 📊 详细测试结果
-- 📈 完整性能指标
-- 🔧 技术实现细节
+- 📊 Detailed test results
+- 📈 Complete performance metrics
+- 🔧 Technical implementation details
 
 ---
 
-## 🎯 使用场景
+## 🎯 Use Cases
 
-### 1. 开发调试
+### 1. Development Debugging
 ```bash
-# 快速验证功能
+# Quick functionality verification
 node test/test-simple.js
 ```
 
-### 2. 完整测试
+### 2. Complete Testing
 ```bash
-# 运行所有测试
+# Run all tests
 node test/test-wasm.js
 ```
 
-### 3. 性能测试
+### 3. Performance Testing
 ```bash
-# 查看性能指标
-node test/test-wasm.js | grep "平均"
+# View performance metrics
+node test/test-wasm.js | grep "Average"
 ```
 
-### 4. 保存测试结果
+### 4. Save Test Results
 ```bash
 node test/test-wasm.js > test/test-results.txt 2>&1
 ```
 
 ---
 
-## 🔧 开发工作流
+## 🔧 Development Workflow
 
-### 1. 修改代码
+### 1. Modify Code
 ```bash
-# 编辑源代码
+# Edit source code
 vim ../src/lib.rs
 vim ../src/circuit.rs
 ```
 
-### 2. 重新编译
+### 2. Recompile
 ```bash
 cd ..
 wasm-pack build --target nodejs
 ```
 
-### 3. 运行测试
+### 3. Run Tests
 ```bash
-# 快速测试
+# Quick test
 node test/test-simple.js
 
-# 完整测试
+# Complete test
 node test/test-wasm.js
 ```
 
-### 4. 检查结果
+### 4. Check Results
 ```bash
-# 查看详细结果
+# View detailed results
 cat test/test-results.txt
 ```
 
 ---
 
-## 🆘 故障排查
+## 🆘 Troubleshooting
 
-### 测试失败？
+### Tests Failed?
 
 ```bash
-# 1. 清理并重新编译
+# 1. Clean and recompile
 cd rust-prover
 cargo clean
 wasm-pack build --target nodejs
 
-# 2. 运行简单测试获取详细错误
+# 2. Run simple test for detailed errors
 node test/test-simple.js
 ```
 
-### 找不到模块？
+### Module Not Found?
 
-确保从正确的目录运行：
+Ensure running from the correct directory:
 ```bash
-# 正确 ✅
+# Correct ✅
 cd rust-prover
 node test/test-wasm.js
 
-# 错误 ❌
+# Wrong ❌
 cd rust-prover/test
-node test-wasm.js  # 找不到 ../pkg/rust_prover.js
+node test-wasm.js  # Cannot find ../pkg/rust_prover.js
 ```
 
-### 编译错误？
+### Compilation Error?
 
 ```bash
-# 检查 Rust 版本
-rustc --version  # 需要 1.70+
+# Check Rust version
+rustc --version  # Need 1.70+
 
-# 检查 wasm-pack
+# Check wasm-pack
 wasm-pack --version
 
-# 重新安装依赖
+# Reinstall dependencies
 cd rust-prover
 cargo update
 ```
 
 ---
 
-## 📝 添加新测试
+## 📝 Adding New Tests
 
-在 `test-wasm.js` 中添加测试用例：
+Add test cases in `test-wasm.js`:
 
 ```javascript
-// 在适当的测试部分添加
+// Add in appropriate test section
 try {
-    console.log('\n[测试 X] 您的测试描述');
+    console.log('\n[Test X] Your test description');
     
-    // 测试逻辑
+    // Test logic
     const proof = wasm_generate_proof(yourValue);
     
-    if (/* 检查条件 */) {
-        console.log('  ✅ 测试通过');
+    if (/* check condition */) {
+        console.log('  ✅ Test passed');
         passedTests++;
     } else {
-        console.log('  ❌ 测试失败');
+        console.log('  ❌ Test failed');
         failedTests++;
     }
 } catch (error) {
-    console.log('  ❌ 异常:', error.message);
+    console.log('  ❌ Exception:', error.message);
     failedTests++;
 }
 ```
 
 ---
 
-## ✅ 测试检查清单
+## ✅ Test Checklist
 
-在提交代码前，确保：
+Before submitting code, ensure:
 
-- [ ] `node test/test-simple.js` 通过
-- [ ] `node test/test-wasm.js` 显示 100% 通过率
-- [ ] 没有编译警告
-- [ ] 性能指标在预期范围内
-- [ ] 文档已更新
-
----
-
-## 📞 相关资源
-
-- **主项目 README**: `../README.md`
-- **源代码**: `../src/`
-- **编译输出**: `../pkg/`
-- **构建脚本**: `../build_wasm.sh`
-- **更新日志**: `../CHANGELOG.md`
+- [ ] `node test/test-simple.js` passes
+- [ ] `node test/test-wasm.js` shows 100% pass rate
+- [ ] No compilation warnings
+- [ ] Performance metrics within expected range
+- [ ] Documentation updated
 
 ---
 
-**✨ 祝测试愉快！**
-- 📝 完整测试说明
-- ⚠️ 已知问题
-- 🔮 未来改进方向
+## 📞 Related Resources
+
+- **Main Project README**: `../README.md`
+- **Source Code**: `../src/`
+- **Compilation Output**: `../pkg/`
+- **Build Script**: `../build_wasm.sh`
+- **Changelog**: `../CHANGELOG.md`
 
 ---
 
-## 🎯 使用示例
-
-### 基本用法
-
-```javascript
-const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
-
-// 生成证明
-const proof = wasm_generate_proof(42);
-console.log('证明大小:', proof.length); // 1312 字节
-
-// 验证证明
-const isValid = wasm_verify_proof(proof);
-console.log('有效:', isValid); // true
-```
-
-### 完整示例
-
-```javascript
-const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
-
-try {
-    console.log('生成零知识证明...');
-    const secretNumber = 42;
-    const proof = wasm_generate_proof(secretNumber);
-    
-    console.log(`✅ 证明生成成功！`);
-    console.log(`   大小: ${proof.length} 字节`);
-    
-    console.log('\n验证证明...');
-    const isValid = wasm_verify_proof(proof);
-    
-    if (isValid) {
-        console.log('✅ 证明有效！');
-        console.log('   证明者知道某个数的平方，但无需透露该数。');
-    } else {
-        console.log('❌ 证明无效！');
-    }
-} catch (error) {
-    console.error('错误:', error.message);
-}
-```
-
----
-
-## 📈 性能指标
-
-| 操作 | 平均耗时 | 数据大小 |
-|------|---------|---------|
-| 证明生成 | ~840 ms | 1312 字节 |
-| 证明验证 | ~600 ms | - |
-| WASM 模块 | - | 746 KB |
-
----
-
-## 🔧 开发工作流
-
-### 1. 修改代码
-```bash
-# 编辑 src/lib.rs 或 src/circuit.rs
-```
-
-### 2. 重新编译
-```bash
-cd rust-prover
-wasm-pack build --target nodejs
-```
-
-### 3. 运行测试
-```bash
-# 快速测试
-node test/test-simple.js
-
-# 完整测试
-node test/test-wasm.js
-```
-
-### 4. 查看结果
-```bash
-# 保存测试结果
-node test/test-wasm.js > test/test-results.txt 2>&1
-
-# 查看结果
-cat test/test-results.txt
-```
-
----
-
-## ✅ 测试检查清单
-
-在提交代码前，确保：
-
-- [ ] `node test/test-simple.js` 通过
-- [ ] `node test/test-wasm.js` 显示 100% 通过率
-- [ ] 没有编译警告
-- [ ] 性能指标在预期范围内
-- [ ] 文档已更新
-
----
-
-## 🆘 故障排查
-
-### 测试失败？
-
-```bash
-# 1. 清理并重新编译
-cd rust-prover
-cargo clean
-wasm-pack build --target nodejs
-
-# 2. 运行简单测试获取详细错误
-node test/test-simple.js
-```
-
-### 找不到模块？
-
-确保从正确的目录运行：
-```bash
-# 正确 ✅
-cd rust-prover
-node test/test-wasm.js
-
-# 错误 ❌
-cd rust-prover/test
-node test-wasm.js  # 找不到 ../pkg/rust_prover.js
-```
-
----
-
-## 📝 贡献指南
-
-添加新测试时：
-
-1. 在 `test-wasm.js` 中添加测试用例
-2. 运行完整测试套件确保通过
-3. 更新相关文档
-4. 保存新的测试结果到 `test-results.txt`
-
----
-
-## 📞 相关资源
-
-- **主项目 README**: `../README.md`
-- **源代码**: `../src/`
-- **编译输出**: `../pkg/`
-- **构建脚本**: `../build_wasm.sh`
-
----
-
-**✨ 祝测试愉快！**
+**✨ Happy Testing!**

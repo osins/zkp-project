@@ -293,6 +293,18 @@ cd smart-contracts && npx hardhat test
 
 本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
 
+## 📖 相关文档
+
+- [完整文档](README.md) | [简体中文](README_CN.md)
+- [快速开始](QUICKSTART.md) | [Quick Start](QUICKSTART_CN.md)
+- [项目结构](STRUCTURE.md) | [Project Structure](STRUCTURE_CN.md)
+- [命令参考](COMMANDS.md) | [Command Reference](COMMANDS_CN.md)
+- [项目总结](PROJECT_SUMMARY.md) | [Project Summary](PROJECT_SUMMARY_CN.md)
+- [验证分析](VALIDATION_ANALYSIS.md) | [Validation Analysis](VALIDATION_ANALYSIS_CN.md)
+- [Circom 官方文档](https://docs.circom.io/)
+- [snarkjs 指南](https://github.com/iden3/snarkjs)
+- [Halo2 教程](https://zcash.github.io/halo2/)
+
 ## 🙏 致谢
 
 - [Halo2](https://github.com/zcash/halo2) - Zcash 团队
