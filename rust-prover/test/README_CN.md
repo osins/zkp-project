@@ -314,7 +314,7 @@ try {
 - **主项目 README**: `../README.md`
 - **源代码**: `../src/`
 - **编译输出**: `../pkg/`
-- **构建脚本**: `../build_wasm.sh`
+- **依赖配置**: `../Cargo.toml`
 - **更新日志**: `../CHANGELOG.md`
 
 ---

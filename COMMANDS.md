@@ -56,12 +56,10 @@ npm run build:contracts
 ```bash
 cd rust-prover
 
-# 构建 WASM
+# Build WASM
 wasm-pack build --target nodejs
-# 或使用脚本
-bash build_wasm.sh
 
-# 运行测试
+# Run tests
 node test/test-wasm.js
 
 # 快速测试

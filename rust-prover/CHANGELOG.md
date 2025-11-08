@@ -61,7 +61,6 @@ English | [简体中文](CHANGELOG_CN.md)
 #### Configuration
 - `Cargo.toml` - Rust dependencies configuration
 - `.gitignore` - Git ignore rules
-- `build_wasm.sh` - Build script
 
 ### 🚀 Usage
 

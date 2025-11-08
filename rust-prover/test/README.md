@@ -316,7 +316,7 @@ Before submitting code, ensure:
 - **Main Project README**: `../README.md`
 - **Source Code**: `../src/`
 - **Compilation Output**: `../pkg/`
-- **Build Script**: `../build_wasm.sh`
+- **Dependencies**: `../Cargo.toml`
 - **Changelog**: `../CHANGELOG.md`
 
 ---

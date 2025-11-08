@@ -31,7 +31,6 @@ rust-prover/
 │   └── rust_prover.d.ts   #    TypeScript type definitions
 │
 ├── Cargo.toml              # 🔧 Rust dependencies configuration
-└── build_wasm.sh           # 🔨 Build script
 ```
 
 ---

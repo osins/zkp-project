@@ -11,7 +11,6 @@ zkp-project/
 │
 ├── 📁 rust-prover/                   # Rust 证明生成器（Halo2）
 │   ├── 📄 Cargo.toml                 # Rust 依赖配置
-│   ├── 📄 build_wasm.sh              # WASM 构建脚本
 │   ├── 📄 README.md                  # 模块文档
 │   ├── 📄 CHANGELOG.md               # 更新日志
 │   ├── 📄 .gitignore

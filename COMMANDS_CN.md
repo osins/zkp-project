@@ -56,8 +56,6 @@ cd rust-prover
 
 # 构建 WASM
 wasm-pack build --target nodejs
-# 或使用脚本
-bash build_wasm.sh
 
 # 运行测试
 node test/test-wasm.js

@@ -25,7 +25,6 @@ English | [简体中文](PROJECT_SUMMARY_CN.md)
 | `test/test-wasm.js` | 完整测试套件（15个测试） | ✅ 完成 |
 | `test/test-simple.js` | 简单调试测试 | ✅ 完成 |
 | `Cargo.toml` | 依赖配置（halo2_proofs, wasm-bindgen） | ✅ 完成 |
-| `build_wasm.sh` | WASM 构建脚本 | ✅ 完成 |
 | `README.md` | 模块文档 | ✅ 完成 |
 | `CHANGELOG.md` | 更新日志 | ✅ 完成 |
 

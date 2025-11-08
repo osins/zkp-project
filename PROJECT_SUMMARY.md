@@ -22,11 +22,10 @@ English | [简体中文](PROJECT_SUMMARY_CN.md)
 |------|------|------|
 | `src/lib.rs` | WASM 接口和核心证明/验证逻辑 | ✅ 完成 |
 | `src/circuit.rs` | Halo2 电路定义（x² = y 验证） | ✅ 完成 |
-| `test/test-wasm.js` | 完整测试套件（15个测试） | ✅ 完成 |
-| `test/test-simple.js` | 简单调试测试 | ✅ 完成 |
-| `Cargo.toml` | 依赖配置（halo2_proofs, wasm-bindgen） | ✅ 完成 |
-| `build_wasm.sh` | WASM 构建脚本 | ✅ 完成 |
-| `README.md` | 模块文档 | ✅ 完成 |
+| `test/test-wasm.js` | Complete test suite (15 tests) | ✅ Complete |
+| `test/test-simple.js` | Simple debugging test | ✅ Complete |
+| `Cargo.toml` | Dependencies configuration (halo2_proofs, wasm-bindgen) | ✅ Complete |
+| `README.md` | Module documentation | ✅ Complete |
 | `CHANGELOG.md` | 更新日志 | ✅ 完成 |
 
 **功能：**

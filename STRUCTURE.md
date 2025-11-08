@@ -21,10 +21,10 @@ zkp-project/
 │
 ├── 📁 rust-prover/                   # Rust proof generator (Halo2)
 │   ├── 📄 Cargo.toml                 # Rust dependencies configuration
-│   ├── 📄 build_wasm.sh              # WASM build script
 │   ├── 📄 README.md                  # Module documentation
 │   ├── 📄 README_CN.md               # Module documentation (Chinese)
 │   ├── 📄 CHANGELOG.md               # Changelog
+│   ├── 📄 CHANGELOG_CN.md            # Changelog (Chinese)
 │   ├── 📄 .gitignore
 │   │
 │   ├── 📁 src/
