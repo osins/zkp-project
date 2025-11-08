@@ -1,0 +1,65 @@
+{
+  "repo": "https://github.com/osins/zkp-project",
+  "commit": "1931e208c36c89339b2d2b0c955f8783beb65225",
+  "env": {},
+  "steps": [
+    {
+      "step": "clone",
+      "ok": true,
+      "stdout": "",
+      "stderr": "Cloning into 'zkp-project-temp'..."
+    },
+    {
+      "step": "check_deps",
+      "ok": true,
+      "stdout": "Node.js版本:\nv20.18.1\nnpm版本:\n11.6.2\nRust版本:\ncargo 1.91.0 (ea2d97820 2025-10-10)\nCircom版本:\n0.5.46",
+      "stderr": ""
+    },
+    {
+      "step": "install_snarkjs",
+      "ok": true,
+      "stdout": "\nadded 45 packages in 11s",
+      "stderr": ""
+    },
+    {
+      "step": "install_wasm_pack",
+      "ok": true,
+      "stdout": "info: successfully installed wasm-pack to `/Users/shaoyingwang/.cargo/bin/wasm-pack`",
+      "stderr": "info: downloading wasm-pack"
+    },
+    {
+      "step": "fix_rust_prover",
+      "ok": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "step": "clean_npm_deps",
+      "ok": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "step": "build_circom",
+      "ok": true,
+      "stdout": "\nadded 46 packages, and audited 48 packages in 1m\n\nfound 0 vulnerabilities\n\n> zkp-circom-circuits@1.0.0 build\n> bash scripts/build_circuit.sh\n\n🔧 Building Circom circuit: example\n📝 Step 1: Compiling circuit...\n⬇️  Step 2: Downloading Powers of Tau...\n🔑 Step 3: Generating zkey (Phase 1)...\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Reading r1cs\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Reading tauG1\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Reading tauG2\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Reading alphatauG1\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Reading betatauG1\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Circuit hash: \n\t\t2ed0e42f 9dbbca0b 677a64af 790cbb4f\n\t\t56688e30 952f2e40 bc23c2b3 bf923e26\n\t\ta999acdd 5af72560 96d7a887 21ac0862\n\t\t7a535bc0 bd73fdf9 33e9408b d5f06733\n🎲 Step 4: Contributing randomness (Phase 2)...\n\u001b[36;22m[DEBUG] \u001b[39;1msnarkJS\u001b[0m: Applying key: H Section: 0/8\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Circuit Hash: \n\t\t2ed0e42f 9dbbca0b 677a64af 790cbb4f\n\t\t56688e30 952f2e40 bc23c2b3 bf923e26\n\t\ta999acdd 5af72560 96d7a887 21ac0862\n\t\t7a535bc0 bd73fdf9 33e9408b d5f06733\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: Contribution Hash: \n\t\t3a0cd748 35000a67 83acb883 8d75c070\n\t\tf5470088 3b4375b7 188a68ba 4268130e\n\t\t703c8097 80d45479 d42e932b 05a974df\n\t\t32cc86b6 1cc936ed e7b28369 800c99b2\n📤 Step 5: Exporting verification key...\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: EXPORT VERIFICATION KEY STARTED\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: > Detected protocol: groth16\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: EXPORT VERIFICATION KEY FINISHED\n📜 Step 6: Generating Solidity verifier...\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: EXPORT VERIFICATION KEY STARTED\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: > Detected protocol: groth16\n\u001b[32;22m[INFO]  \u001b[39;1msnarkJS\u001b[0m: EXPORT VERIFICATION KEY FINISHED\n✅ Circuit build complete!\n📁 Output files:\n  - R1CS: build/example.r1cs\n  - WASM: build/example_js/example.wasm\n  - zkey: build/example_final.zkey\n  - Verification key: build/verification_key.json\n  - Solidity verifier: build/Verifier.sol",
+      "stderr": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0 4689k    0 45805    0     0  44297      0  0:01:48  0:00:01  0:01:47 44298\r 27 4689k   27 1280k    0     0   630k      0  0:00:07  0:00:02  0:00:05  630k\r100 4689k  100 4689k    0     0  1833k      0  0:00:02  0:00:02 --:--:-- 1833k"
+    },
+    {
+      "step": "build_rust_wasm",
+      "ok": false,
+      "stdout": "",
+      "stderr": "    Updating crates.io index\nerror: failed to select a version for `halo2curves`.\n    ... required by package `zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/zkp-project-temp/rust-prover)`\nversions that meet the requirements `^0.6` are: 0.6.1, 0.6.0\n\npackage `zkp-prover` depends on `halo2curves` with feature `bn256` but `halo2curves` does not have that feature.\n\n\nfailed to select a version for `halo2curves` which could resolve this conflict"
+    },
+    {
+      "step": "install_node_sdk",
+      "ok": true,
+      "stdout": "\nadded 311 packages, and audited 360 packages in 2s\n\n38 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities",
+      "stderr": "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.\nnpm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported"
+    }
+  ],
+  "final": {
+    "available": false,
+    "notes": ""
+  }
+}

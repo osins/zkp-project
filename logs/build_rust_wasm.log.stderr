@@ -1,0 +1,9 @@
+    Updating crates.io index
+error: failed to select a version for `halo2curves`.
+    ... required by package `zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/zkp-project-temp/rust-prover)`
+versions that meet the requirements `^0.6` are: 0.6.1, 0.6.0
+
+package `zkp-prover` depends on `halo2curves` with feature `bn256` but `halo2curves` does not have that feature.
+
+
+failed to select a version for `halo2curves` which could resolve this conflict

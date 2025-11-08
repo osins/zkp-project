@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 target/
+zkp-project-temp/
 
 # Build outputs
 dist/
