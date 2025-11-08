@@ -1,7 +1,7 @@
-pragma circom 2.0.0;
-
+// Circom 0.5.x compatible circuit
 // 简单的乘法验证电路
 // 证明知道 a 和 b 使得 a * b = c
+
 template Multiplier() {
     signal input a;
     signal input b;
@@ -43,4 +43,4 @@ template HashVerifier() {
 }
 
 // 主电路：组合多个子电路
-component main {public [b]} = Multiplier();
+component main = Multiplier();

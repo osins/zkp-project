@@ -18,14 +18,23 @@ circom $CIRCUIT_DIR/$CIRCUIT_NAME.circom \
   --r1cs \
   --wasm \
   --sym \
-  --c \
-  -o $BUILD_DIR
+  --c
+
+# 移动生成的文件到 build 目录
+mv $CIRCUIT_NAME.r1cs $BUILD_DIR/ 2>/dev/null || true
+mv $CIRCUIT_NAME.wasm $BUILD_DIR/ 2>/dev/null || true
+mv $CIRCUIT_NAME.sym $BUILD_DIR/ 2>/dev/null || true
+mv $CIRCUIT_NAME.cpp $BUILD_DIR/ 2>/dev/null || true
+mv $CIRCUIT_NAME.dat $BUILD_DIR/ 2>/dev/null || true
 
 # 2. 下载 Powers of Tau (如果不存在)
 if [ ! -f "$BUILD_DIR/$PTAU_FILE" ]; then
     echo "⬇️  Step 2: Downloading Powers of Tau..."
     cd $BUILD_DIR
-    wget https://hermez.s3-eu-west-1.amazonaws.com/$PTAU_FILE
+    # 使用新的 URL
+    curl -L -o $PTAU_FILE https://storage.googleapis.com/zkevm/ptau/$PTAU_FILE || \
+    curl -L -o $PTAU_FILE https://hermez.s3-eu-west-1.amazonaws.com/$PTAU_FILE || \
+    curl -L -o $PTAU_FILE https://hermezptau.blob.core.windows.net/ptau/$PTAU_FILE
     cd ..
 else
     echo "✓ Powers of Tau already exists"
@@ -58,6 +67,10 @@ echo "📜 Step 6: Generating Solidity verifier..."
 npx snarkjs zkey export solidityverifier \
   $BUILD_DIR/${CIRCUIT_NAME}_final.zkey \
   $BUILD_DIR/Verifier.sol
+
+# 7. 创建兼容的目录结构（for Node SDK）
+mkdir -p $BUILD_DIR/${CIRCUIT_NAME}_js
+cp $BUILD_DIR/${CIRCUIT_NAME}.wasm $BUILD_DIR/${CIRCUIT_NAME}_js/
 
 echo "✅ Circuit build complete!"
 echo "📁 Output files:"
