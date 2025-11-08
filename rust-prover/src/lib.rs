@@ -12,8 +12,21 @@ use halo2_proofs::{
 use halo2_proofs::pasta::group::ff::PrimeField;
 use rand_core::OsRng;
 
-mod circuit;
-use crate::circuit::SquareCircuit;
+mod circuits;
+mod simple_adapter;
+mod adapters;
+
+// 重新导出核心模块
+pub use circuits::{
+    SquareCircuit,
+    AgeVerificationCircuit,
+    BalanceProofCircuit,
+    RangeProofCircuit,
+    MerkleProofCircuit,
+    VotingCircuit,
+};
+pub use simple_adapter::{SimpleProofSystem, SimpleValue};
+pub use adapters::{CircuitAdapter, CircuitType, ProofResult};
 
 // 为 WASM 添加 panic hook，以便更好地调试
 #[wasm_bindgen(start)]
@@ -30,7 +43,7 @@ pub fn generate_real_proof(
     let x_fp: Fp = x.into();
     let y = x_fp * x_fp; // 计算公开输出 y = x²
     
-    let circuit = SquareCircuit { x: Some(x_fp) };
+    let circuit = circuits::SquareCircuit { x: Some(x_fp) };
     let mut proof_bytes = vec![];
     let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof_bytes);
 
@@ -68,7 +81,7 @@ pub fn verify_real_proof(
 pub fn wasm_generate_proof(x: u32) -> Vec<u8> {
     // 使用更大的参数 k=8，提供足够的约束空间
     let params = Params::<EqAffine>::new(8);
-    let circuit = SquareCircuit { x: Some((x as u64).into()) };
+    let circuit = circuits::SquareCircuit { x: Some((x as u64).into()) };
     
     // 使用 expect 提供更好的错误信息
     let vk = keygen_vk(&params, &circuit).expect("生成验证密钥失败");
@@ -107,7 +120,7 @@ pub fn wasm_verify_proof(proof_with_y: &[u8]) -> bool {
     
     // 使用相同的参数 k=8
     let params = Params::<EqAffine>::new(8);
-    let circuit = SquareCircuit { x: None };
+    let circuit = circuits::SquareCircuit { x: None };
     
     // 如果生成密钥失败，返回 false
     let vk = match keygen_vk(&params, &circuit) {

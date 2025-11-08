@@ -64,7 +64,7 @@
 
 ```bash
 # 编译
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 测试
 node test/test-wasm.js

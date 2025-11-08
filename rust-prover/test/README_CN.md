@@ -42,7 +42,7 @@ node test/test-simple.js
 
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ---
@@ -207,7 +207,7 @@ vim ../src/circuit.rs
 ### 2. 重新编译
 ```bash
 cd ..
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### 3. 运行测试
@@ -235,7 +235,7 @@ cat test/test-results.txt
 # 1. 清理并重新编译
 cd rust-prover
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 2. 运行简单测试获取详细错误
 node test/test-simple.js
@@ -391,7 +391,7 @@ try {
 ### 2. 重新编译
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### 3. 运行测试
@@ -434,7 +434,7 @@ cat test/test-results.txt
 # 1. 清理并重新编译
 cd rust-prover
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 2. 运行简单测试获取详细错误
 node test/test-simple.js

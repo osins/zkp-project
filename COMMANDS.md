@@ -57,7 +57,7 @@ npm run build:contracts
 cd rust-prover
 
 # Build WASM
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # Run tests
 node test/test-wasm.js
@@ -306,7 +306,7 @@ bash scripts/integration-test.sh  # 注：此脚本需创建
 # Rust WASM 调试
 cd rust-prover
 node test/test-simple.js  # 简单测试获取详细错误
-RUST_BACKTRACE=1 wasm-pack build --target nodejs
+RUST_BACKTRACE=1 wasm-pack build --target web
 
 # Node.js 调试
 node --inspect-brk dist/scripts/generateProof.js

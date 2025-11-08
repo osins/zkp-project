@@ -168,7 +168,7 @@ API Endpoints:
 cd rust-prover
 
 # Build WASM
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # Run tests
 node test/test-wasm.js

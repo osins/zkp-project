@@ -212,7 +212,7 @@ cargo install wasm-pack
 # Clean and rebuild
 cd rust-prover
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ---
@@ -266,7 +266,7 @@ curl -X POST http://localhost:3000/api/proof/generate \
 
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 node test/test-wasm.js
 ```
 

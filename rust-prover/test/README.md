@@ -44,8 +44,10 @@ node test/test-simple.js
 
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
+
+**Important:** Use `--target web` to ensure ESM compatibility and proper `init()` function export.
 
 ---
 
@@ -209,7 +211,7 @@ vim ../src/circuit.rs
 ### 2. Recompile
 ```bash
 cd ..
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### 3. Run Tests
@@ -237,7 +239,7 @@ cat test/test-results.txt
 # 1. Clean and recompile
 cd rust-prover
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 2. Run simple test for detailed errors
 node test/test-simple.js

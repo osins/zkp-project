@@ -41,8 +41,14 @@ rust-prover/
 
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
+
+**Why `--target web`?**
+- ✅ Exports `init()` function for manual WASM initialization
+- ✅ Compatible with Node.js ESM via `fs.readFileSync`
+- ✅ Production-ready for real ZK proof generation
+- ❌ `--target nodejs` generates CommonJS (no `init` export, incompatible with ESM)
 
 ### 2. Run Tests
 
@@ -151,12 +157,12 @@ cargo install wasm-pack
 
 ```bash
 # Development build
-wasm-pack build --dev --target nodejs
+wasm-pack build --dev --target web
 
 # Production build
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
-# Browser build
+# Browser build (same as above)
 wasm-pack build --target web
 ```
 
@@ -167,7 +173,7 @@ wasm-pack build --target web
 vim src/lib.rs
 
 # 2. Recompile
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 3. Run tests
 node test/test-wasm.js
@@ -277,7 +283,7 @@ console_error_panic_hook = "0.1"
 ```bash
 # Clean and rebuild
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### Tests failed?

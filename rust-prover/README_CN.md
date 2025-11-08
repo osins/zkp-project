@@ -39,7 +39,7 @@ rust-prover/
 
 ```bash
 cd rust-prover
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### 2. 运行测试
@@ -149,12 +149,12 @@ cargo install wasm-pack
 
 ```bash
 # 开发构建
-wasm-pack build --dev --target nodejs
+wasm-pack build --dev --target web
 
 # 生产构建
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
-# 浏览器构建
+# 浏览器构建（同上）
 wasm-pack build --target web
 ```
 
@@ -165,7 +165,7 @@ wasm-pack build --target web
 vim src/lib.rs
 
 # 2. 重新编译
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 3. 运行测试
 node test/test-wasm.js
@@ -275,7 +275,7 @@ console_error_panic_hook = "0.1"
 ```bash
 # 清理并重新构建
 cargo clean
-wasm-pack build --target nodejs
+wasm-pack build --target web
 ```
 
 ### 测试失败？

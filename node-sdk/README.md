@@ -315,6 +315,10 @@ npm run clean
 运行集成验证脚本确认一切正常：
 
 ```bash
+cd ../rust-prover
+
+wasm-pack build --target nodejs --release 
+
 npx ts-node scripts/test-integration.ts
 ```
 

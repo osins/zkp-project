@@ -205,3 +205,128 @@ impl Circuit<Fp> for SquareCircuit {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use halo2_proofs::{
+        pasta::EqAffine,
+        poly::commitment::Params,
+        plonk::{create_proof, keygen_pk, keygen_vk, verify_proof, SingleVerifier},
+        transcript::{Blake2bWrite, Blake2bRead, Challenge255},
+    };
+    use rand_core::OsRng;
+
+    /// 测试：without_witnesses 应该返回无 witness 的电路
+    #[test]
+    fn test_without_witnesses() {
+        let circuit = SquareCircuit { x: Some(Fp::from(5)) };
+        let no_witness = circuit.without_witnesses();
+        assert_eq!(no_witness.x, None);
+    }
+
+    /// 测试：生成和验证真实 ZK 证明
+    #[test]
+    fn test_square_real_proof() {
+        let k = 8;
+        let x = Fp::from(5);
+        let y = x * x; // 25
+
+        // 1. 生成参数
+        let params = Params::<EqAffine>::new(k);
+        
+        // 2. 生成密钥
+        let empty_circuit = SquareCircuit { x: None };
+        let vk = keygen_vk(&params, &empty_circuit).unwrap();
+        let pk = keygen_pk(&params, vk.clone(), &empty_circuit).unwrap();
+        
+        // 3. 生成真实证明
+        let circuit = SquareCircuit { x: Some(x) };
+        let mut proof = vec![];
+        let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
+        let instances = vec![vec![y]];
+        
+        create_proof(
+            &params,
+            &pk,
+            &[circuit],
+            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &mut OsRng,
+            &mut transcript,
+        ).unwrap();
+        
+        assert!(!proof.is_empty(), "Proof should not be empty");
+        
+        // 4. 验证真实证明
+        let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
+        let strategy = SingleVerifier::new(&params);
+        
+        let result = verify_proof(
+            &params,
+            &vk,
+            strategy,
+            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &mut transcript,
+        );
+        
+        assert!(result.is_ok(), "Proof verification should succeed");
+    }
+
+    /// 测试：零值真实证明
+    #[test]
+    fn test_square_zero_real_proof() {
+        let k = 8;
+        let x = Fp::zero();
+        let y = Fp::zero();
+
+        let params = Params::<EqAffine>::new(k);
+        let empty_circuit = SquareCircuit { x: None };
+        let vk = keygen_vk(&params, &empty_circuit).unwrap();
+        let pk = keygen_pk(&params, vk, &empty_circuit).unwrap();
+        
+        let circuit = SquareCircuit { x: Some(x) };
+        let mut proof = vec![];
+        let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
+        let instances = vec![vec![y]];
+        
+        create_proof(
+            &params,
+            &pk,
+            &[circuit],
+            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &mut OsRng,
+            &mut transcript,
+        ).unwrap();
+        
+        assert!(!proof.is_empty());
+    }
+
+    /// 测试：大数值真实证明
+    #[test]
+    fn test_square_large_value_real_proof() {
+        let k = 8;
+        let x = Fp::from(100);
+        let y = x * x;
+
+        let params = Params::<EqAffine>::new(k);
+        let empty_circuit = SquareCircuit { x: None };
+        let vk = keygen_vk(&params, &empty_circuit).unwrap();
+        let pk = keygen_pk(&params, vk, &empty_circuit).unwrap();
+        
+        let circuit = SquareCircuit { x: Some(x) };
+        let mut proof = vec![];
+        let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
+        let instances = vec![vec![y]];
+        
+        create_proof(
+            &params,
+            &pk,
+            &[circuit],
+            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &mut OsRng,
+            &mut transcript,
+        ).unwrap();
+        
+        assert!(!proof.is_empty());
+    }
+}

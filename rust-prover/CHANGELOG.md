@@ -66,7 +66,7 @@ English | [简体中文](CHANGELOG_CN.md)
 
 ```bash
 # Compile
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # Test
 node test/test-wasm.js

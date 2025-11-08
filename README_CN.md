@@ -168,7 +168,7 @@ API 端点：
 cd rust-prover
 
 # 构建 WASM
-wasm-pack build --target nodejs
+wasm-pack build --target web
 
 # 运行测试
 node test/test-wasm.js

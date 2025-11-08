@@ -41,24 +41,31 @@ pkg/
 ### 完整构建（推荐）
 
 ```bash
-# Node.js 目标（服务端使用）
-wasm-pack build --target nodejs
-
-# 浏览器目标（Web 应用）
+# ✅ Web 目标（推荐 - Node.js ESM + 浏览器通用）
 wasm-pack build --target web
+
+# ❌ Node.js 目标（不推荐 - 生成 CommonJS，无 init 导出）
+# wasm-pack build --target nodejs
 
 # Bundler 目标（Webpack/Rollup 等）
 wasm-pack build --target bundler
 ```
 
+**为什么使用 `--target web`？**
+- ✅ 导出 `init()` 函数，支持手动 WASM 初始化
+- ✅ 兼容 Node.js ESM（通过 `fs.readFileSync`）
+- ✅ 兼容浏览器环境
+- ✅ 生产级真实 ZK 证明系统
+- ❌ `--target nodejs` 生成 CommonJS，不导出 `init`，与 ESM 不兼容
+
 ### 开发构建
 
 ```bash
 # 开发模式（更快，未优化）
-wasm-pack build --dev --target nodejs
+wasm-pack build --dev --target web
 
 # 生产模式（默认，已优化）
-wasm-pack build --release --target nodejs
+wasm-pack build --release --target web
 ```
 
 ### 清理构建产物

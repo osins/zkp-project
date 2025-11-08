@@ -27,24 +27,34 @@
 
 ### 强制构建目标
 
-**必须使用 `bundler` 目标**:
+**推荐使用 `web` 目标（Node.js + 浏览器通用）**:
 
 ```bash
-# ✅ 正确
+# ✅ 推荐（支持 Node.js ESM + 浏览器）
+wasm-pack build --target web
+
+# ✅ 备选（Webpack/Rollup 打包器）
 wasm-pack build --target bundler
 
 # ❌ 错误
-wasm-pack build --target nodejs  # 生成 CommonJS
+wasm-pack build --target nodejs  # 生成 CommonJS，无 init 导出
 ```
 
 **目标对比**:
 
-| 目标 | 模块格式 | 是否允许 |
-|------|---------|---------|
-| `bundler` | ES Module | ✅ **强制使用** |
-| `web` | ES Module + async init | ✅ 可选（特定场景） |
-| `nodejs` | CommonJS | ❌ **禁止** |
-| `no-modules` | IIFE | ❌ **禁止** |
+| 目标 | 模块格式 | init 导出 | Node.js ESM | 浏览器 | 推荐度 |
+|------|---------|----------|------------|--------|-------|
+| `web` | ES Module | ✅ 有 | ✅ 支持 | ✅ 支持 | ⭐⭐⭐ **强烈推荐** |
+| `bundler` | ES Module | ❌ 无 | ⚠️ 需打包器 | ✅ 支持 | ⭐⭐ 可选 |
+| `nodejs` | CommonJS | ❌ 无 | ❌ 不兼容 ESM | ❌ 不支持 | ❌ **禁止** |
+| `no-modules` | IIFE | - | ❌ 不支持 | ⚠️ 仅旧浏览器 | ❌ **禁止** |
+
+**为什么选择 `web`？**
+- ✅ 导出 `default init()` 函数，支持手动 WASM 初始化
+- ✅ 兼容 Node.js ESM（通过 `fs.readFileSync`）
+- ✅ 直接支持浏览器环境
+- ✅ 无需额外打包工具
+- ✅ 生产级真实 ZK 证明系统
 
 ---
 
@@ -269,7 +279,7 @@ crate-type = ["cdylib", "rlib"]
 
 ### 构建前检查
 
-- [ ] `wasm-pack build --target bundler`
+- [ ] `wasm-pack build --target web`
 - [ ] 所有 `package.json` 包含 `"type": "module"`
 - [ ] 无 `require` 或 `module.exports`
 - [ ] 使用 `import` / `export` 语法
@@ -333,7 +343,7 @@ crate-type = ["cdylib", "rlib"]
 
 5. **重新构建 WASM**:
    ```bash
-   wasm-pack build --target bundler
+   wasm-pack build --target web
    ```
 
 ---
@@ -421,7 +431,7 @@ jobs:
       
       - name: Verify WASM build target
         run: |
-          wasm-pack build --target bundler
+          wasm-pack build --target web
           if ! grep -q '"type": "module"' pkg/package.json; then
             echo "❌ Error: WASM package must be ES Module"
             exit 1
