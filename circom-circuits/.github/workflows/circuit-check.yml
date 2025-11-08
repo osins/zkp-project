@@ -1,0 +1,177 @@
+name: Circuit Quality Check
+
+on:
+  pull_request:
+    paths:
+      - 'circuits/**/*.circom'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'circuits/**/*.circom'
+
+jobs:
+  circuit-lint:
+    name: Lint Circuits
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Check for hardcoded values
+        run: |
+          echo "🔍 Checking for hardcoded values..."
+          bash scripts/lint_hardcoded.sh
+      
+      - name: Check for required documentation
+        run: |
+          echo "📝 Checking documentation..."
+          bash scripts/lint_documentation.sh
+      
+      - name: Check for deprecated circuits in production
+        run: |
+          echo "⚠️  Checking for deprecated circuits..."
+          bash scripts/lint_deprecated.sh
+
+  circuit-compile:
+    name: Compile Circuits
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install Circom
+        run: |
+          wget https://github.com/iden3/circom/releases/download/v2.1.6/circom-linux-amd64
+          chmod +x circom-linux-amd64
+          sudo mv circom-linux-amd64 /usr/local/bin/circom
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Compile production circuits
+        run: |
+          echo "🔧 Compiling production circuits..."
+          for circuit in circuits/production/*.circom; do
+            if [ -f "$circuit" ]; then
+              echo "Compiling $circuit..."
+              circom "$circuit" --r1cs --wasm --sym -o build/
+            fi
+          done
+      
+      - name: Compile example circuits
+        run: |
+          echo "🔧 Compiling example circuits..."
+          for circuit in circuits/examples/*.circom; do
+            # Skip deprecated circuits
+            if [[ ! "$circuit" =~ DEPRECATED ]]; then
+              if [ -f "$circuit" ]; then
+                echo "Compiling $circuit..."
+                circom "$circuit" --r1cs --wasm --sym -o build/
+              fi
+            fi
+          done
+      
+      - name: Check compilation warnings
+        run: |
+          echo "⚠️  Checking for warnings..."
+          # Add warning checks here
+
+  circuit-test:
+    name: Test Circuits
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install Circom
+        run: |
+          wget https://github.com/iden3/circom/releases/download/v2.1.6/circom-linux-amd64
+          chmod +x circom-linux-amd64
+          sudo mv circom-linux-amd64 /usr/local/bin/circom
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build test circuits
+        run: |
+          echo "🔧 Building test circuits..."
+          bash scripts/build_example.sh multiplier
+      
+      - name: Run tests
+        run: |
+          echo "🧪 Running tests..."
+          npm test
+
+  security-check:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Check for insecure patterns
+        run: |
+          echo "🔒 Checking for insecure patterns..."
+          bash scripts/security_check.sh
+      
+      - name: Check constraint completeness
+        run: |
+          echo "✅ Checking constraint completeness..."
+          bash scripts/check_constraints.sh
+      
+      - name: Verify no production circuits use deprecated patterns
+        run: |
+          echo "🚫 Checking production circuits..."
+          if grep -r "DEPRECATED\|BROKEN\|INSECURE" circuits/production/ 2>/dev/null; then
+            echo "❌ Error: Production circuits contain deprecated patterns!"
+            exit 1
+          else
+            echo "✅ No deprecated patterns found in production circuits"
+          fi
+
+  coverage-check:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Check test coverage
+        run: |
+          echo "📊 Checking test coverage..."
+          # Add coverage check here
+          # For production circuits: require >= 90%
+          # For example circuits: require >= 50%
