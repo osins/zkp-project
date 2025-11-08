@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Circom Linter Configuration",
+  "description": "Linting rules for Circom circuits in this project",
+  "version": "1.0.0",
+  
+  "rules": {
+    "no-hardcoded-values": {
+      "enabled": true,
+      "level": "error",
+      "description": "Prohibit hardcoded constant values without justification",
+      "exceptions": [
+        "0",
+        "1"
+      ]
+    },
+    
+    "require-documentation": {
+      "enabled": true,
+      "level": "error",
+      "description": "All circuits must have documentation header",
+      "required_fields": [
+        "Circuit",
+        "Purpose",
+        "Status",
+        "Inputs",
+        "Outputs",
+        "Constraints",
+        "Author",
+        "Version"
+      ]
+    },
+    
+    "signal-naming": {
+      "enabled": true,
+      "level": "warning",
+      "description": "Signal names should be descriptive",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+      "min_length": 1,
+      "max_length": 50
+    },
+    
+    "template-naming": {
+      "enabled": true,
+      "level": "error",
+      "description": "Template names should be PascalCase",
+      "pattern": "^[A-Z][a-zA-Z0-9]*$"
+    },
+    
+    "no-unused-signals": {
+      "enabled": true,
+      "level": "warning",
+      "description": "All declared signals must be used"
+    },
+    
+    "require-constraints": {
+      "enabled": true,
+      "level": "error",
+      "description": "All signals must have constraints"
+    },
+    
+    "secure-crypto": {
+      "enabled": true,
+      "level": "error",
+      "description": "Use secure cryptographic primitives",
+      "forbidden_patterns": [
+        "preimage * preimage",
+        "input + input"
+      ],
+      "recommended_libraries": [
+        "circomlib/poseidon.circom",
+        "circomlib/mimc.circom",
+        "circomlib/pedersen.circom"
+      ]
+    },
+    
+    "file-naming": {
+      "enabled": true,
+      "level": "warning",
+      "description": "File naming conventions",
+      "production_pattern": "^[a-z][a-z0-9_]*\\.circom$",
+      "example_pattern": "^[a-z][a-z0-9_]*\\.circom$",
+      "deprecated_prefix": "DEPRECATED_"
+    }
+  },
+  
+  "directories": {
+    "production": {
+      "path": "circuits/production",
+      "strict_mode": true,
+      "require_review": true,
+      "min_test_coverage": 90
+    },
+    
+    "examples": {
+      "path": "circuits/examples",
+      "strict_mode": false,
+      "require_review": false,
+      "min_test_coverage": 50
+    },
+    
+    "tests": {
+      "path": "circuits/tests",
+      "strict_mode": false,
+      "require_review": false
+    }
+  },
+  
+  "security_checks": {
+    "check_overflow": true,
+    "check_underflow": true,
+    "check_range": true,
+    "check_input_validation": true
+  },
+  
+  "ignore_patterns": [
+    "**/*_BROKEN_*.circom",
+    "**/*_INSECURE_*.circom",
+    "**/DEPRECATED_*.circom",
+    "**/node_modules/**",
+    "**/build/**"
+  ]
+}

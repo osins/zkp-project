@@ -1,16 +1,50 @@
 {
   "name": "zkp-circom-circuits",
-  "version": "1.0.0",
-  "description": "Circom circuits for ZKP project",
+  "version": "2.0.0",
+  "description": "Circom circuits for ZKP project - Production ready with proper testing and review",
   "scripts": {
     "build": "bash scripts/build_circuit.sh",
-    "test": "node scripts/test_circuit.js",
-    "clean": "rm -rf build/*"
+    "build:example": "bash scripts/build_example.sh",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:example": "jest tests/test_multiplier.js",
+    "lint": "bash scripts/lint_all.sh",
+    "lint:hardcoded": "bash scripts/lint_hardcoded.sh",
+    "lint:docs": "bash scripts/lint_documentation.sh",
+    "lint:deprecated": "bash scripts/lint_deprecated.sh",
+    "security": "bash scripts/security_check.sh",
+    "check:constraints": "bash scripts/check_constraints.sh",
+    "clean": "rm -rf build/*",
+    "clean:all": "rm -rf build/* node_modules"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.js"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "circuits/**/*.circom"
+    ],
+    "testTimeout": 30000
   },
   "devDependencies": {
-    "snarkjs": "^0.7.0"
+    "snarkjs": "^0.7.0",
+    "jest": "^29.0.0"
   },
   "dependencies": {
     "snarkjs": "^0.7.0"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "zkp",
+    "zero-knowledge",
+    "circom",
+    "groth16",
+    "snarkjs"
+  ],
+  "license": "MIT"
 }

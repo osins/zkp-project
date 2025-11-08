@@ -1,28 +1,14 @@
 /**
- * WASM 模块测试脚本
+ * WASM 模块测试脚本（CommonJS 版本）
  * 测试 Halo2 零知识证明的生成和验证功能
  */
 
-import init, { wasm_generate_proof, wasm_verify_proof, init_panic_hook } from '../pkg/zkp_rust_prover.js';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+const { wasm_generate_proof, wasm_verify_proof, init_panic_hook } = require('../pkg/zkp_rust_prover.js');
 
-// 获取当前文件路径
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// 读取 WASM 文件并初始化
-const wasmPath = join(__dirname, '../pkg/zkp_rust_prover_bg.wasm');
-const wasmBuffer = readFileSync(wasmPath);
-
-// 初始化 WASM 模块（web 目标方式 - ES Module）
-await init({ module_or_path: wasmBuffer });
+console.log('🚀 开始测试 WASM 零知识证明模块...\n');
 
 // 初始化 panic hook
 init_panic_hook();
-
-console.log('🚀 开始测试 WASM 零知识证明模块...\n');
 
 // 测试用例
 const testCases = [
@@ -37,9 +23,9 @@ const testCases = [
 let passedTests = 0;
 let failedTests = 0;
 
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 console.log('测试 1: 证明生成功能');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 testCases.forEach((testCase, index) => {
   try {
@@ -68,7 +54,7 @@ testCases.forEach((testCase, index) => {
 
 console.log('\n' + '='.repeat(60));
 console.log('测试 2: 证明验证功能');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 testCases.forEach((testCase, index) => {
   try {
@@ -98,7 +84,7 @@ testCases.forEach((testCase, index) => {
 
 console.log('\n' + '='.repeat(60));
 console.log('测试 3: 无效证明拒绝测试');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 try {
   console.log('\n[测试] 篡改的证明数据');
@@ -128,7 +114,7 @@ try {
 
 console.log('\n' + '='.repeat(60));
 console.log('测试 4: 空数据测试');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 try {
   console.log('\n[测试] 空证明数据');
@@ -149,7 +135,7 @@ try {
 
 console.log('\n' + '='.repeat(60));
 console.log('测试 5: 性能基准测试');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 try {
   const benchmarkRounds = 5;
@@ -185,11 +171,11 @@ try {
 // 最终测试报告
 console.log('\n' + '='.repeat(60));
 console.log('📋 测试总结');
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 console.log(`✅ 通过测试: ${passedTests}`);
 console.log(`❌ 失败测试: ${failedTests}`);
 console.log(`📈 成功率: ${((passedTests / (passedTests + failedTests)) * 100).toFixed(2)}%`);
-console.log('=' .repeat(60));
+console.log('='.repeat(60));
 
 if (failedTests === 0) {
   console.log('\n🎉 所有测试通过！WASM 模块工作正常！\n');
