@@ -18,13 +18,14 @@
 
 | 文件 | 功能 | 状态 |
 |------|------|------|
+| `src/lib.rs` | WASM 接口和核心证明/验证逻辑 | ✅ 完成 |
 | `src/circuit.rs` | Halo2 电路定义（x² = y 验证） | ✅ 完成 |
-| `src/prover.rs` | 证明生成逻辑 | ✅ 完成 |
-| `src/verifier.rs` | 链下验证 | ✅ 完成 |
-| `src/main.rs` | WASM 接口导出 | ✅ 完成 |
-| `scripts/generate_keys.rs` | 密钥生成脚本 | ✅ 完成 |
+| `test/test-wasm.js` | 完整测试套件（15个测试） | ✅ 完成 |
+| `test/test-simple.js` | 简单调试测试 | ✅ 完成 |
 | `Cargo.toml` | 依赖配置（halo2_proofs, wasm-bindgen） | ✅ 完成 |
 | `build_wasm.sh` | WASM 构建脚本 | ✅ 完成 |
+| `README.md` | 模块文档 | ✅ 完成 |
+| `CHANGELOG.md` | 更新日志 | ✅ 完成 |
 
 **功能：**
 - ✅ Halo2 平方验证电路
@@ -184,11 +185,11 @@
 
 ```bash
 ✅ Halo2 电路：平方验证（x² = y）
-✅ KZG 承诺方案
-✅ 证明生成
-✅ 链下验证
+✅ 证明生成（通过 WASM 接口）
+✅ 链下验证（通过 WASM 接口）
 ✅ WASM 编译
-✅ 密钥管理
+✅ 完整测试套件（15个测试，100%通过）
+✅ 性能指标：生成 ~840ms，验证 ~600ms
 ```
 
 ### ✅ 智能合约功能
@@ -219,7 +220,7 @@
 
 | 模块 | 测试类型 | 状态 |
 |------|----------|------|
-| Rust Prover | 单元测试 | ✅ 完成 |
+| Rust Prover | WASM 集成测试 | ✅ 完成（15/15通过） |
 | Circom 电路 | 集成测试 | ✅ 完成 |
 | Node SDK | 单元测试 | ✅ 完成 |
 | 智能合约 | Hardhat 测试 | ✅ 完成 |
@@ -231,9 +232,10 @@
 ### 后端
 
 - **Rust** 1.70+
-  - halo2_proofs 0.3
+  - halo2_proofs 0.3.1
+  - halo2curves 0.9.0
   - wasm-bindgen 0.2
-  - ff, group
+  - getrandom (with js feature)
 
 - **Node.js** 18+
   - TypeScript 5.3
@@ -259,11 +261,11 @@
 
 | 组件 | 方案 | 实现 |
 |------|------|------|
-| Rust Prover | Halo2 + KZG | ✅ |
+| Rust Prover | Halo2 (Pallas曲线) | ✅ |
 | Circom 电路 | Groth16 | ✅ |
 | 链上验证 | Groth16 Verifier | ✅ |
-| 承诺方案 | KZG / Pedersen | ✅ |
-| 曲线 | BN254 (alt_bn128) | ✅ |
+| 承诺方案 | Pedersen (Halo2) | ✅ |
+| 曲线 | BN254 (Circom), Pallas (Rust) | ✅ |
 
 ---
 
@@ -482,21 +484,21 @@ node scripts/verify-on-chain.js
 
 ```
 语言分布：
-  Rust:       ~800 行
+  Rust:       ~500 行（精简后）
   TypeScript: ~1200 行
   Solidity:   ~400 行
   Circom:     ~100 行
   Shell:      ~300 行
-  JavaScript: ~400 行
+  JavaScript: ~600 行（含测试）
 
 文件统计：
-  源代码文件: 27
+  源代码文件: 30+
   配置文件:   10
-  文档文件:   5
-  脚本文件:   8
+  文档文件:   10+
+  脚本文件:   6
 
 模块统计：
-  Rust Prover:      7 文件
+  Rust Prover:      14 文件
   Circom Circuits:  4 文件
   Node SDK:        10 文件
   Smart Contracts: 11 文件

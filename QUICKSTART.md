@@ -158,8 +158,10 @@ node scripts/verify-on-chain.js
 ## 🧪 测试命令
 
 ```bash
-# 测试 Rust prover
-cd rust-prover && cargo test
+# 测试 Rust WASM prover
+cd rust-prover
+node test/test-wasm.js      # 完整测试（15个测试）
+node test/test-simple.js    # 快速测试
 
 # 测试 Circom 电路
 cd circom-circuits && npm run test
@@ -202,13 +204,13 @@ wget https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_12.ptau
 ### ❌ Rust 编译错误
 **解决方案：**
 ```bash
-# 更新 Rust
-rustup update
+# 确保 wasm-pack 已安装
+cargo install wasm-pack
 
 # 清理并重新构建
 cd rust-prover
 cargo clean
-cargo build --release
+wasm-pack build --target nodejs
 ```
 
 ---
@@ -256,6 +258,14 @@ npm run dev
 curl -X POST http://localhost:3000/api/proof/generate \
   -H "Content-Type: application/json" \
   -d '{"input": {"a": 3, "b": 11}}'
+```
+
+### 测试 Rust WASM
+
+```bash
+cd rust-prover
+wasm-pack build --target nodejs
+node test/test-wasm.js
 ```
 
 ---

@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+// Verifier 合约接口 - 需要单独声明
+interface IVerifier {
+    function verifyProof(
+        uint[2] calldata _pA,
+        uint[2][2] calldata _pB,
+        uint[2] calldata _pC,
+        uint[1] calldata _pubSignals
+    ) external view returns (bool);
+}
+
 /**
  * @title ZKPApplication
  * @dev 使用零知识证明的应用示例合约
  */
 contract ZKPApplication {
-    // Verifier 合约接口
-    interface IVerifier {
-        function verifyProof(
-            uint[2] calldata _pA,
-            uint[2][2] calldata _pB,
-            uint[2] calldata _pC,
-            uint[1] calldata _pubSignals
-        ) external view returns (bool);
-    }
-
     IVerifier public verifier;
     
     // 记录已验证的证明

@@ -54,28 +54,20 @@ npm run build:contracts
 ```bash
 cd rust-prover
 
-# 编译（Debug）
-cargo build
-
-# 编译（Release）
-cargo build --release
+# 构建 WASM
+wasm-pack build --target nodejs
+# 或使用脚本
+bash build_wasm.sh
 
 # 运行测试
-cargo test
+node test/test-wasm.js
 
-# 运行单个测试
-cargo test test_square_circuit
-
-# 生成密钥
-cargo run --bin generate_keys
-
-# 构建 WASM
-bash build_wasm.sh
-# 或
-wasm-pack build --target nodejs --out-dir wasm/pkg
+# 快速测试
+node test/test-simple.js
 
 # 清理
 cargo clean
+rm -rf pkg/
 ```
 
 ---
@@ -290,8 +282,8 @@ curl http://localhost:3000/api/circuit/info
 # 根目录 - 运行所有测试
 npm run test:all
 
-# Rust 测试
-cd rust-prover && cargo test
+# Rust WASM 测试
+cd rust-prover && node test/test-wasm.js
 
 # Circom 测试
 cd circom-circuits && npm run test
@@ -303,7 +295,7 @@ cd node-sdk && npm test
 cd smart-contracts && npx hardhat test
 
 # 集成测试（需要运行节点）
-bash scripts/integration-test.sh
+bash scripts/integration-test.sh  # 注：此脚本需创建
 ```
 
 ---
@@ -311,9 +303,10 @@ bash scripts/integration-test.sh
 ## 🐛 调试命令
 
 ```bash
-# Rust 调试构建
+# Rust WASM 调试
 cd rust-prover
-RUST_BACKTRACE=1 cargo test
+node test/test-simple.js  # 简单测试获取详细错误
+RUST_BACKTRACE=1 wasm-pack build --target nodejs
 
 # Node.js 调试
 node --inspect-brk dist/scripts/generateProof.js
@@ -335,9 +328,9 @@ snarkjs r1cs export json build/example.r1cs build/constraints.json
 ## 📊 性能分析
 
 ```bash
-# Rust 性能测试
+# Rust WASM 性能测试
 cd rust-prover
-cargo bench
+time node test/test-wasm.js
 
 # Gas 使用分析
 cd smart-contracts
@@ -362,10 +355,10 @@ bash scripts/setup.sh
 npm run build:all
 npm run test:all
 
-# 格式化检查
+# 格式化检查（注：需先安装相关工具）
 cd rust-prover && cargo fmt --check
-cd node-sdk && npm run lint
-cd smart-contracts && npm run lint
+cd node-sdk && npm run lint  # 如果配置了
+cd smart-contracts && npm run lint  # 如果配置了
 
 # 类型检查
 cd node-sdk && npx tsc --noEmit

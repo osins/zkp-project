@@ -28,7 +28,7 @@ async function testCircuit() {
     try {
         // 1. 计算 witness
         console.log("1️⃣  Calculating witness...");
-        const { witness } = await snarkjs.wtns.calculate(
+        await snarkjs.wtns.calculate(
             input,
             wasmFile,
             path.join(buildDir, "witness.wtns")

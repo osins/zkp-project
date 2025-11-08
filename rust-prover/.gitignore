@@ -1,5 +1,22 @@
+# Rust
 target/
 Cargo.lock
-*.bin
-wasm/pkg/
-node_modules/
+**/*.rs.bk
+
+# WASM build artifacts
+pkg/
+wasm-pack.log
+
+# Test outputs (keep test directory structure)
+test/test-results-*.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

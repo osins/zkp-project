@@ -1,0 +1,1103 @@
+# ZKP 项目验证报告
+# 生成时间: Sat Nov  8 15:46:44 CST 2025
+# 执行者: shaoyingwang
+---
+repo: "https://github.com/osins/zkp-project"
+commit: "681e59a3a6fad5868b8b3cb0e694716d1656bdbb"
+timestamp: "20251108154606"
+
+env:
+  node: "v20.18.1"
+  npm: "11.6.2"
+  cargo: "1.91.0"
+  wasm-pack: "0.13.1"
+  circom: "0.5.46"
+  snarkjs: "0.7.5
+N/A"
+  os: "Darwin"
+
+steps:
+  - step: "check_project
+total 1048
+drwxr-xr-x  29 shaoyingwang  staff     928 Nov  8 15:46 .
+drwxr-xr-x  11 shaoyingwang  staff     352 Nov  8 12:42 ..
+drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 15:41 .git
+-rw-r--r--@  1 shaoyingwang  staff     426 Nov  8 13:53 .gitignore
+-rw-r--r--@  1 shaoyingwang  staff    7854 Nov  8 12:54 COMMANDS.md
+-rw-r--r--@  1 shaoyingwang  staff    3912 Nov  8 12:56 FILES.txt
+-rw-r--r--@  1 shaoyingwang  staff    1068 Nov  8 12:49 LICENSE
+-rw-r--r--@  1 shaoyingwang  staff   10862 Nov  8 12:55 PROJECT_SUMMARY.md
+-rw-r--r--@  1 shaoyingwang  staff    5433 Nov  8 12:52 QUICKSTART.md
+-rw-r--r--@  1 shaoyingwang  staff    7431 Nov  8 12:48 README.md
+-rw-r--r--@  1 shaoyingwang  staff    6581 Nov  8 12:51 STRUCTURE.md
+drwxr-xr-x@  8 shaoyingwang  staff     256 Nov  8 13:13 backend
+drwxr-xr-x@  7 shaoyingwang  staff     224 Nov  8 15:41 circom-circuits
+-rwxr-xr-x@  1 shaoyingwang  staff    5240 Nov  8 13:43 enhanced_validate.sh
+-rw-r--r--@  1 shaoyingwang  staff    5239 Nov  8 13:41 enhanced_validation_report.json
+-rwxr-xr-x@  1 shaoyingwang  staff    4181 Nov  8 13:47 final_validate.sh
+-rw-r--r--@  1 shaoyingwang  staff    2502 Nov  8 13:53 final_validation_report.json
+drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 13:41 logs
+drwxr-xr-x@ 10 shaoyingwang  staff     320 Nov  8 14:44 node-sdk
+drwxr-xr-x@ 44 shaoyingwang  staff    1408 Nov  8 15:41 node_modules
+-rw-r--r--@  1 shaoyingwang  staff  418186 Nov  8 15:10 package-lock.json
+-rw-r--r--@  1 shaoyingwang  staff     954 Nov  8 12:49 package.json
+drwxr-xr-x@  6 shaoyingwang  staff     192 Nov  8 15:03 reports
+drwxr-xr-x@  9 shaoyingwang  staff     288 Nov  8 14:53 rust-prover
+drwxr-xr-x@  8 shaoyingwang  staff     256 Nov  8 12:55 scripts
+drwxr-xr-x@ 14 shaoyingwang  staff     448 Nov  8 15:03 smart-contracts
+-rwxr-xr-x@  1 shaoyingwang  staff    7810 Nov  8 14:19 validate_project.sh
+-rwxr-xr-x@  1 shaoyingwang  staff   11177 Nov  8 15:45 validate_project_fixed.sh
+-rw-r--r--@  1 shaoyingwang  staff     626 Nov  8 15:46 validation_output.log
+
+git信息:
+main
+ M circom-circuits/scripts/test_circuit.js
+ M package-lock.json
+ M rust-prover/Cargo.toml
+ M rust-prover/scripts/generate_keys.rs
+ M rust-prover/src/circuit.rs
+ M rust-prover/src/main.rs
+ M rust-prover/src/prover.rs
+ M rust-prover/src/verifier.rs
+ M smart-contracts/contracts/ZKPApplication.sol
+ M validate_project_fixed.sh
+?? node-sdk/scripts/verify-on-chain.js
+?? reports/20251108150155_validation_report.yaml
+?? rust-prover/src/lib.rs"
+    ok: true
+total 1048
+drwxr-xr-x  29 shaoyingwang  staff     928 Nov  8 15:46 .
+drwxr-xr-x  11 shaoyingwang  staff     352 Nov  8 12:42 ..
+drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 15:41 .git
+-rw-r--r--@  1 shaoyingwang  staff     426 Nov  8 13:53 .gitignore
+-rw-r--r--@  1 shaoyingwang  staff    7854 Nov  8 12:54 COMMANDS.md
+-rw-r--r--@  1 shaoyingwang  staff    3912 Nov  8 12:56 FILES.txt
+-rw-r--r--@  1 shaoyingwang  staff    1068 Nov  8 12:49 LICENSE
+-rw-r--r--@  1 shaoyingwang  staff   10862 Nov  8 12:55 PROJECT_SUMMARY.md
+-rw-r--r--@  1 shaoyingwang  staff    5433 Nov  8 12:52 QUICKSTART.md
+-rw-r--r--@  1 shaoyingwang  staff    7431 Nov  8 12:48 README.md
+-rw-r--r--@  1 shaoyingwang  staff    6581 Nov  8 12:51 STRUCTURE.md
+drwxr-xr-x@  8 shaoyingwang  staff     256 Nov  8 13:13 backend
+drwxr-xr-x@  7 shaoyingwang  staff     224 Nov  8 15:41 circom-circuits
+-rwxr-xr-x@  1 shaoyingwang  staff    5240 Nov  8 13:43 enhanced_validate.sh
+-rw-r--r--@  1 shaoyingwang  staff    5239 Nov  8 13:41 enhanced_validation_report.json
+-rwxr-xr-x@  1 shaoyingwang  staff    4181 Nov  8 13:47 final_validate.sh
+-rw-r--r--@  1 shaoyingwang  staff    2502 Nov  8 13:53 final_validation_report.json
+drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 13:41 logs
+drwxr-xr-x@ 10 shaoyingwang  staff     320 Nov  8 14:44 node-sdk
+drwxr-xr-x@ 44 shaoyingwang  staff    1408 Nov  8 15:41 node_modules
+-rw-r--r--@  1 shaoyingwang  staff  418186 Nov  8 15:10 package-lock.json
+-rw-r--r--@  1 shaoyingwang  staff     954 Nov  8 12:49 package.json
+drwxr-xr-x@  6 shaoyingwang  staff     192 Nov  8 15:03 reports
+drwxr-xr-x@  9 shaoyingwang  staff     288 Nov  8 14:53 rust-prover
+drwxr-xr-x@  8 shaoyingwang  staff     256 Nov  8 12:55 scripts
+drwxr-xr-x@ 14 shaoyingwang  staff     448 Nov  8 15:03 smart-contracts
+-rwxr-xr-x@  1 shaoyingwang  staff    7810 Nov  8 14:19 validate_project.sh
+-rwxr-xr-x@  1 shaoyingwang  staff   11177 Nov  8 15:45 validate_project_fixed.sh
+-rw-r--r--@  1 shaoyingwang  staff     626 Nov  8 15:46 validation_output.log
+
+git信息:
+main
+ M circom-circuits/scripts/test_circuit.js
+ M package-lock.json
+ M rust-prover/Cargo.toml
+ M rust-prover/scripts/generate_keys.rs
+ M rust-prover/src/circuit.rs
+ M rust-prover/src/main.rs
+ M rust-prover/src/prover.rs
+ M rust-prover/src/verifier.rs
+ M smart-contracts/contracts/ZKPApplication.sol
+ M validate_project_fixed.sh
+?? node-sdk/scripts/verify-on-chain.js
+?? reports/20251108150155_validation_report.yaml
+    stdout: |
+            当前项目结构:
+      total 1048
+      drwxr-xr-x  29 shaoyingwang  staff     928 Nov  8 15:46 .
+      drwxr-xr-x  11 shaoyingwang  staff     352 Nov  8 12:42 ..
+      drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 15:41 .git
+      -rw-r--r--@  1 shaoyingwang  staff     426 Nov  8 13:53 .gitignore
+      -rw-r--r--@  1 shaoyingwang  staff    7854 Nov  8 12:54 COMMANDS.md
+      -rw-r--r--@  1 shaoyingwang  staff    3912 Nov  8 12:56 FILES.txt
+      -rw-r--r--@  1 shaoyingwang  staff    1068 Nov  8 12:49 LICENSE
+      -rw-r--r--@  1 shaoyingwang  staff   1... (truncated)
+    stderr: |
+            
+      total 1048
+      drwxr-xr-x  29 shaoyingwang  staff     928 Nov  8 15:46 .
+      drwxr-xr-x  11 shaoyingwang  staff     352 Nov  8 12:42 ..
+      drwxr-xr-x@ 13 shaoyingwang  staff     416 Nov  8 15:41 .git
+      -rw-r--r--@  1 shaoyingwang  staff     426 Nov  8 13:53 .gitignore
+      -rw-r--r--@  1 shaoyingwang  staff    7854 Nov  8 12:54 COMMANDS.md
+      -rw-r--r--@  1 shaoyingwang  staff    3912 Nov  8 12:56 FILES.txt
+      -rw-r--r--@  1 shaoyingwang  staff    1068 Nov  8 12:49 LICENSE
+      -rw-r--r--@  1 shaoyingwang  staff   10862 No... (truncated)
+  - step: "check_deps
+v20.18.1
+npm: 
+11.6.2
+Rust: 
+cargo 1.91.0 (ea2d97820 2025-10-10)
+wasm-pack: 
+wasm-pack 0.13.1
+Circom: 
+0.5.46
+snarkjs: 
+snarkjs@0.7.5"
+    ok: true
+v20.18.1
+npm: 
+11.6.2
+Rust: 
+cargo 1.91.0 (ea2d97820 2025-10-10)
+wasm-pack: 
+wasm-pack 0.13.1
+Circom: 
+0.5.46
+snarkjs: 
+    stdout: |
+            Node.js: 
+      v20.18.1
+      npm: 
+      11.6.2
+      Rust: 
+      cargo 1.91.0 (ea2d97820 2025-10-10)
+      wasm-pack: 
+      wasm-pack 0.13.1
+      Circom: 
+      0.5.46
+      snarkjs: 
+    stderr: |
+            
+      v20.18.1
+      npm: 
+      11.6.2
+      Rust: 
+      cargo 1.91.0 (ea2d97820 2025-10-10)
+      wasm-pack: 
+      wasm-pack 0.13.1
+      Circom: 
+      0.5.46
+      snarkjs: 
+  - step: "build_circom
+added 47 packages, and audited 49 packages in 2s
+
+found 0 vulnerabilities
+🔧 Building Circom circuit: example
+📝 Step 1: Compiling circuit...
+✓ Powers of Tau already exists
+🔑 Step 3: Generating zkey (Phase 1)...
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading r1cs
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG2
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading alphatauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading betatauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Circuit hash: 
+		2ed0e42f 9dbbca0b 677a64af 790cbb4f
+		56688e30 952f2e40 bc23c2b3 bf923e26
+		a999acdd 5af72560 96d7a887 21ac0862
+		7a535bc0 bd73fdf9 33e9408b d5f06733
+🎲 Step 4: Contributing randomness (Phase 2)...
+[36;22m[DEBUG] [39;1msnarkJS[0m: Applying key: H Section: 0/8
+[32;22m[INFO]  [39;1msnarkJS[0m: Circuit Hash: 
+		2ed0e42f 9dbbca0b 677a64af 790cbb4f
+		56688e30 952f2e40 bc23c2b3 bf923e26
+		a999acdd 5af72560 96d7a887 21ac0862
+		7a535bc0 bd73fdf9 33e9408b d5f06733
+[32;22m[INFO]  [39;1msnarkJS[0m: Contribution Hash: 
+		4c4ef40a f778937a d2c1eaea a9e7f282
+		7a994e97 58624da5 7251a28d 7facd111
+		aac1e16b e5d0033e 5cf43c8d 5bcb5746
+		e34d1949 dba70207 86aad9b9 59537009
+📤 Step 5: Exporting verification key...
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY STARTED
+[32;22m[INFO]  [39;1msnarkJS[0m: > Detected protocol: groth16
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY FINISHED
+📜 Step 6: Generating Solidity verifier...
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY STARTED
+[32;22m[INFO]  [39;1msnarkJS[0m: > Detected protocol: groth16
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY FINISHED
+✅ Circuit build complete!
+📁 Output files:
+  - R1CS: build/example.r1cs
+  - WASM: build/example_js/example.wasm
+  - zkey: build/example_final.zkey
+  - Verification key: build/verification_key.json
+  - Solidity verifier: build/Verifier.sol
+
+生成的文件:
+total 10432
+-rw-r--r--@ 1 shaoyingwang  staff   7.7K Nov  8 15:46 Verifier.sol
+-rw-r--r--@ 1 shaoyingwang  staff   774B Nov  8 15:42 calldata.txt
+-rw-r--r--@ 1 shaoyingwang  staff   1.1K Nov  8 15:46 example.cpp
+-rw-r--r--@ 1 shaoyingwang  staff   3.3K Nov  8 15:46 example.dat
+-rw-r--r--@ 1 shaoyingwang  staff   264B Nov  8 15:46 example.r1cs
+-rw-r--r--@ 1 shaoyingwang  staff    39B Nov  8 15:46 example.sym
+-rw-r--r--@ 1 shaoyingwang  staff    30K Nov  8 15:46 example.wasm
+-rw-r--r--@ 1 shaoyingwang  staff   2.9K Nov  8 15:46 example_0000.zkey
+-rw-r--r--@ 1 shaoyingwang  staff   3.3K Nov  8 15:46 example_final.zkey
+drwxr-xr-x@ 3 shaoyingwang  staff    96B Nov  8 13:07 example_js
+-rw-r--r--@ 1 shaoyingwang  staff   774B Nov  8 15:00 generated_calldata.txt
+-rw-r--r--@ 1 shaoyingwang  staff   979B Nov  8 15:00 generated_proof.json
+-rw-r--r--@ 1 shaoyingwang  staff   4.6M Nov  8 13:06 powersOfTau28_hez_final_12.ptau
+-rw-r--r--@ 1 shaoyingwang  staff   979B Nov  8 15:42 proof.json
+-rw-r--r--@ 1 shaoyingwang  staff   3.2K Nov  8 15:46 verification_key.json
+-rw-r--r--@ 1 shaoyingwang  staff   204B Nov  8 15:42 witness.wtns"
+    ok: true
+added 47 packages, and audited 49 packages in 2s
+
+found 0 vulnerabilities
+🔧 Building Circom circuit: example
+📝 Step 1: Compiling circuit...
+✓ Powers of Tau already exists
+🔑 Step 3: Generating zkey (Phase 1)...
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading r1cs
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG2
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading alphatauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Reading betatauG1
+[32;22m[INFO]  [39;1msnarkJS[0m: Circuit hash: 
+		2ed0e42f 9dbbca0b 677a64af 790cbb4f
+		56688e30 952f2e40 bc23c2b3 bf923e26
+		a999acdd 5af72560 96d7a887 21ac0862
+		7a535bc0 bd73fdf9 33e9408b d5f06733
+🎲 Step 4: Contributing randomness (Phase 2)...
+[36;22m[DEBUG] [39;1msnarkJS[0m: Applying key: H Section: 0/8
+[32;22m[INFO]  [39;1msnarkJS[0m: Circuit Hash: 
+		2ed0e42f 9dbbca0b 677a64af 790cbb4f
+		56688e30 952f2e40 bc23c2b3 bf923e26
+		a999acdd 5af72560 96d7a887 21ac0862
+		7a535bc0 bd73fdf9 33e9408b d5f06733
+[32;22m[INFO]  [39;1msnarkJS[0m: Contribution Hash: 
+		4c4ef40a f778937a d2c1eaea a9e7f282
+		7a994e97 58624da5 7251a28d 7facd111
+		aac1e16b e5d0033e 5cf43c8d 5bcb5746
+		e34d1949 dba70207 86aad9b9 59537009
+📤 Step 5: Exporting verification key...
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY STARTED
+[32;22m[INFO]  [39;1msnarkJS[0m: > Detected protocol: groth16
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY FINISHED
+📜 Step 6: Generating Solidity verifier...
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY STARTED
+[32;22m[INFO]  [39;1msnarkJS[0m: > Detected protocol: groth16
+[32;22m[INFO]  [39;1msnarkJS[0m: EXPORT VERIFICATION KEY FINISHED
+✅ Circuit build complete!
+📁 Output files:
+  - R1CS: build/example.r1cs
+  - WASM: build/example_js/example.wasm
+  - zkey: build/example_final.zkey
+  - Verification key: build/verification_key.json
+  - Solidity verifier: build/Verifier.sol
+
+生成的文件:
+total 10432
+-rw-r--r--@ 1 shaoyingwang  staff   7.7K Nov  8 15:46 Verifier.sol
+-rw-r--r--@ 1 shaoyingwang  staff   774B Nov  8 15:42 calldata.txt
+-rw-r--r--@ 1 shaoyingwang  staff   1.1K Nov  8 15:46 example.cpp
+-rw-r--r--@ 1 shaoyingwang  staff   3.3K Nov  8 15:46 example.dat
+-rw-r--r--@ 1 shaoyingwang  staff   264B Nov  8 15:46 example.r1cs
+-rw-r--r--@ 1 shaoyingwang  staff    39B Nov  8 15:46 example.sym
+-rw-r--r--@ 1 shaoyingwang  staff    30K Nov  8 15:46 example.wasm
+-rw-r--r--@ 1 shaoyingwang  staff   2.9K Nov  8 15:46 example_0000.zkey
+-rw-r--r--@ 1 shaoyingwang  staff   3.3K Nov  8 15:46 example_final.zkey
+drwxr-xr-x@ 3 shaoyingwang  staff    96B Nov  8 13:07 example_js
+-rw-r--r--@ 1 shaoyingwang  staff   774B Nov  8 15:00 generated_calldata.txt
+-rw-r--r--@ 1 shaoyingwang  staff   979B Nov  8 15:00 generated_proof.json
+-rw-r--r--@ 1 shaoyingwang  staff   4.6M Nov  8 13:06 powersOfTau28_hez_final_12.ptau
+-rw-r--r--@ 1 shaoyingwang  staff   979B Nov  8 15:42 proof.json
+-rw-r--r--@ 1 shaoyingwang  staff   3.2K Nov  8 15:46 verification_key.json
+    stdout: |
+            
+      added 47 packages, and audited 49 packages in 2s
+      
+      found 0 vulnerabilities
+      🔧 Building Circom circuit: example
+      📝 Step 1: Compiling circuit...
+      ✓ Powers of Tau already exists
+      🔑 Step 3: Generating zkey (Phase 1)...
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading r1cs
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG1
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG2
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading alphatauG1
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading betatauG1
+      [32;22m[INFO]  [39;1msnarkJS... (truncated)
+    stderr: |
+            
+      added 47 packages, and audited 49 packages in 2s
+      
+      found 0 vulnerabilities
+      🔧 Building Circom circuit: example
+      📝 Step 1: Compiling circuit...
+      ✓ Powers of Tau already exists
+      🔑 Step 3: Generating zkey (Phase 1)...
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading r1cs
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG1
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading tauG2
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading alphatauG1
+      [32;22m[INFO]  [39;1msnarkJS[0m: Reading betatauG1
+      [32;22m[INFO]  [39;1msnarkJS... (truncated)
+  - step: "build_rust_wasm
+   Compiling zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/rust-prover)
+error[E0433]: failed to resolve: could not find `kzg` in `poly`
+ --> src/prover.rs:6:11
+  
+6 
+  
+
+error[E0433]: failed to resolve: could not find `kzg` in `poly`
+ --> src/verifier.rs:5:11
+  
+5 
+  
+
+error[E0432]: unresolved imports `halo2_proofs::transcript::TranscriptReadBuffer`, `halo2_proofs::transcript::TranscriptWriterBuffer`
+  --> src/prover.rs:11:50
+   
+11 
+   
+   
+   
+   
+help: a similar name exists in the module
+   
+11 -         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
+11 +         Blake2bRead, Blake2bWrite, Challenge255, TranscriptRead, TranscriptWriterBuffer,
+   
+help: a similar name exists in the module
+   
+11 -         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
+11 +         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWrite,
+   
+
+error[E0432]: unresolved import `halo2_proofs::transcript::TranscriptReadBuffer`
+  --> src/verifier.rs:10:36
+   
+10 
+   
+   
+   
+   
+
+error[E0432]: unresolved import `prover::WasmProver`
+   --> src/lib.rs:10:26
+    
+ 10 
+    
+    
+note: found an item that was configured out
+   --> src/prover.rs:111:12
+    
+109 
+    
+110 
+111 
+    
+
+error[E0432]: unresolved import `verifier::WasmVerifier`
+  --> src/lib.rs:11:30
+   
+11 
+   
+   
+   
+   
+   
+note: found an item that was configured out
+  --> src/verifier.rs:72:12
+   
+70 
+   
+71 
+72 
+   
+
+error[E0425]: cannot find value `advice` in this scope
+  --> src/circuit.rs:50:21
+   
+50 
+   
+
+error[E0425]: cannot find value `advice` in this scope
+  --> src/circuit.rs:59:21
+   
+59 
+   
+
+error[E0603]: module `pallas` is private
+  --> src/prover.rs:14:30
+   
+14 
+   
+   
+note: the module `pallas` is defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2curves-0.9.0/src/pasta/mod.rs:4:1
+   
+ 4 
+   
+
+error[E0603]: module `pallas` is private
+  --> src/verifier.rs:13:25
+   
+13 
+   
+   
+note: the module `pallas` is defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2curves-0.9.0/src/pasta/mod.rs:4:1
+   
+ 4 
+   
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:14:7
+   
+14 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:17:7
+   
+17 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:25:7
+   
+25 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:32:7
+   
+32 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:106:7
+    
+106 
+    
+    
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:109:7
+    
+109 
+    
+    
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:115:7
+    
+115 
+    
+    
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unused import: `circuit::Value`
+ --> src/prover.rs:4:5
+  
+4 
+  
+  
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Fp`
+  --> src/prover.rs:14:26
+   
+14 
+   
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:67:7
+   
+67 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:70:7
+   
+70 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:76:7
+   
+76 
+   
+   
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+error[E0107]: function takes 4 generic arguments but 5 generic arguments were supplied
+  --> src/prover.rs:88:9
+   
+88 
+   
+...
+92 
+   
+93 
+   
+   
+note: function defined here, with 4 generic parameters: `C`, `E`, `T`, `V`
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+   
+67 
+   
+68 
+69 
+   
+70 
+   
+71 
+   
+72 
+   
+
+error[E0061]: this function takes 5 arguments but 4 arguments were supplied
+  --> src/prover.rs:88:9
+   
+88 
+89 
+90 
+91 
+92 
+93 
+94 
+   
+   
+   
+95 
+96 
+97 
+98 
+99 
+   
+   
+note: function defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+   
+67 
+   
+help: provide the argument
+   
+94 ~         >(
+95 +             &verifier_params,
+96 +             vk,
+97 +             &[&[]],
+98 +             &mut transcript,
+99 +             /* transcript */,
+100+         )
+   
+
+error[E0107]: function takes 4 generic arguments but 5 generic arguments were supplied
+  --> src/verifier.rs:44:9
+   
+44 
+   
+...
+48 
+   
+49 
+   
+   
+note: function defined here, with 4 generic parameters: `C`, `E`, `T`, `V`
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+   
+67 
+   
+68 
+69 
+   
+70 
+   
+71 
+   
+72 
+   
+
+error[E0061]: this function takes 5 arguments but 4 arguments were supplied
+  --> src/verifier.rs:44:9
+   
+44 
+45 
+46 
+47 
+48 
+49 
+50 
+   
+   
+   
+51 
+52 
+53 
+54 
+55 
+   
+   
+note: function defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+   
+67 
+   
+help: provide the argument
+   
+50 ~         >(
+51 +             &verifier_params,
+52 +             vk,
+53 +             &[public_inputs],
+54 +             &mut transcript,
+55 +             /* transcript */,
+56 +         )
+   
+
+Some errors have detailed explanations: E0061, E0107, E0425, E0432, E0433, E0603.
+For more information about an error, try `rustc --explain E0061`.
+warning: `zkp-prover` (lib) generated 12 warnings
+error: could not compile `zkp-prover` (lib) due to 14 previous errors; 12 warnings emitted"
+    ok: false
+   Compiling zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/rust-prover)
+error[E0433]: failed to resolve: could not find `kzg` in `poly`
+ --> src/prover.rs:6:11
+
+     poly::kzg::{
+           ^^^ could not find `kzg` in `poly`
+
+error[E0433]: failed to resolve: could not find `kzg` in `poly`
+ --> src/verifier.rs:5:11
+
+     poly::kzg::{
+           ^^^ could not find `kzg` in `poly`
+
+error[E0432]: unresolved imports `halo2_proofs::transcript::TranscriptReadBuffer`, `halo2_proofs::transcript::TranscriptWriterBuffer`
+  --> src/prover.rs:11:50
+
+         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
+                                                  ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^ no `TranscriptWriterBuffer` in `transcript`
+                                                  
+                                                  no `TranscriptReadBuffer` in `transcript`
+
+help: a similar name exists in the module
+
+11 -         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
+11 +         Blake2bRead, Blake2bWrite, Challenge255, TranscriptRead, TranscriptWriterBuffer,
+
+help: a similar name exists in the module
+
+11 -         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
+11 +         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWrite,
+
+
+error[E0432]: unresolved import `halo2_proofs::transcript::TranscriptReadBuffer`
+  --> src/verifier.rs:10:36
+
+         Blake2bRead, Challenge255, TranscriptReadBuffer,
+                                    ^^^^^^^^^^^^^^^^^^^^
+                                    
+                                    no `TranscriptReadBuffer` in `transcript`
+                                    help: a similar name exists in the module: `TranscriptRead`
+
+error[E0432]: unresolved import `prover::WasmProver`
+   --> src/lib.rs:10:26
+
+ pub use prover::{Prover, WasmProver};
+                          ^^^^^^^^^^ no `WasmProver` in `prover`
+
+note: found an item that was configured out
+   --> src/prover.rs:111:12
+
+ #[cfg(feature = "wasm")]
+       ---------------- the item is gated behind the `wasm` feature
+ #[wasm_bindgen]
+ pub struct WasmProver {
+            ^^^^^^^^^^
+
+error[E0432]: unresolved import `verifier::WasmVerifier`
+  --> src/lib.rs:11:30
+
+ pub use verifier::{Verifier, WasmVerifier};
+                              ^^^^^^^^^^^^
+                              
+                              no `WasmVerifier` in `verifier`
+                              help: a similar name exists in the module: `Verifier`
+
+note: found an item that was configured out
+  --> src/verifier.rs:72:12
+
+ #[cfg(feature = "wasm")]
+       ---------------- the item is gated behind the `wasm` feature
+ #[wasm_bindgen]
+ pub struct WasmVerifier {
+            ^^^^^^^^^^^^
+
+error[E0425]: cannot find value `advice` in this scope
+  --> src/circuit.rs:50:21
+
+                     advice,
+                     ^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `advice` in this scope
+  --> src/circuit.rs:59:21
+
+                     advice,
+                     ^^^^^^ not found in this scope
+
+error[E0603]: module `pallas` is private
+  --> src/prover.rs:14:30
+
+ use halo2curves::pasta::{Fp, pallas};
+                              ^^^^^^ private module
+
+note: the module `pallas` is defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2curves-0.9.0/src/pasta/mod.rs:4:1
+
+ mod pallas;
+ ^^^^^^^^^^
+
+error[E0603]: module `pallas` is private
+  --> src/verifier.rs:13:25
+
+ use halo2curves::pasta::pallas;
+                         ^^^^^^ private module
+
+note: the module `pallas` is defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2curves-0.9.0/src/pasta/mod.rs:4:1
+
+ mod pallas;
+ ^^^^^^^^^^
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:14:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:17:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:25:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/lib.rs:32:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:106:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:109:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+   --> src/prover.rs:115:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+    = note: no expected values for `feature`
+    = help: consider adding `wasm` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unused import: `circuit::Value`
+ --> src/prover.rs:4:5
+
+     circuit::Value,
+     ^^^^^^^^^^^^^^
+
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Fp`
+  --> src/prover.rs:14:26
+
+ use halo2curves::pasta::{Fp, pallas};
+                          ^^
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:67:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:70:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `wasm`
+  --> src/verifier.rs:76:7
+
+ #[cfg(feature = "wasm")]
+       ^^^^^^^^^^^^^^^^ help: remove the condition
+
+   = note: no expected values for `feature`
+   = help: consider adding `wasm` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+error[E0107]: function takes 4 generic arguments but 5 generic arguments were supplied
+  --> src/prover.rs:88:9
+
+           verify_proof::<
+           ^^^^^^^^^^^^ expected 4 generic arguments
+...
+               Blake2bRead<&[u8], pallas, Challenge255<pallas>>,
+  _____________________________________________________________-
+ 
+ 
+
+note: function defined here, with 4 generic parameters: `C`, `E`, `T`, `V`
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+
+ pub fn verify_proof<
+        ^^^^^^^^^^^^
+     'params,
+     C: CurveAffine,
+     -
+     E: EncodedChallenge<C>,
+     -
+     T: TranscriptRead<C, E>,
+     -
+     V: VerificationStrategy<'params, C>,
+     -
+
+error[E0061]: this function takes 5 arguments but 4 arguments were supplied
+  --> src/prover.rs:88:9
+
+ /          verify_proof::<
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+
+note: function defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+
+ pub fn verify_proof<
+        ^^^^^^^^^^^^
+help: provide the argument
+
+94 ~         >(
+95 +             &verifier_params,
+96 +             vk,
+97 +             &[&[]],
+98 +             &mut transcript,
+99 +             /* transcript */,
+100+         )
+
+
+error[E0107]: function takes 4 generic arguments but 5 generic arguments were supplied
+  --> src/verifier.rs:44:9
+
+           verify_proof::<
+           ^^^^^^^^^^^^ expected 4 generic arguments
+...
+               Blake2bRead<&[u8], pallas, Challenge255<pallas>>,
+  _____________________________________________________________-
+ 
+ 
+
+note: function defined here, with 4 generic parameters: `C`, `E`, `T`, `V`
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+
+ pub fn verify_proof<
+        ^^^^^^^^^^^^
+     'params,
+     C: CurveAffine,
+     -
+     E: EncodedChallenge<C>,
+     -
+     T: TranscriptRead<C, E>,
+     -
+     V: VerificationStrategy<'params, C>,
+     -
+
+error[E0061]: this function takes 5 arguments but 4 arguments were supplied
+  --> src/verifier.rs:44:9
+
+ /          verify_proof::<
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+
+note: function defined here
+  --> /Users/shaoyingwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/halo2_proofs-0.3.1/src/plonk/verifier.rs:67:8
+
+ pub fn verify_proof<
+        ^^^^^^^^^^^^
+help: provide the argument
+
+50 ~         >(
+51 +             &verifier_params,
+52 +             vk,
+53 +             &[public_inputs],
+54 +             &mut transcript,
+55 +             /* transcript */,
+56 +         )
+
+
+Some errors have detailed explanations: E0061, E0107, E0425, E0432, E0433, E0603.
+For more information about an error, try `rustc --explain E0061`.
+warning: `zkp-prover` (lib) generated 12 warnings
+error: could not compile `zkp-prover` (lib) due to 14 previous errors; 12 warnings emitted
+    stdout: |
+            
+         Compiling zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/rust-prover)
+      error[E0433]: failed to resolve: could not find `kzg` in `poly`
+       --> src/prover.rs:6:11
+      
+      
+      
+      
+      error[E0433]: failed to resolve: could not find `kzg` in `poly`
+       --> src/verifier.rs:5:11
+      
+      
+      
+      
+      error[E0432]: unresolved imports `halo2_proofs::transcript::TranscriptReadBuffer`, `halo2_proofs::transcript::TranscriptWriterBuffer`
+        --> src/prover.rs:11:50
+      
+      
+      
+      
+      
+      
+      help: a similar name exists in the mo... (truncated)
+    stderr: |
+               Compiling halo2curves v0.9.0
+         Compiling zkp-prover v0.1.0 (/Users/shaoyingwang/works/codes/DigitalAssetsProject/zkp-project/rust-prover)
+      error[E0433]: failed to resolve: could not find `kzg` in `poly`
+       --> src/prover.rs:6:11
+      
+      
+      
+      
+      error[E0433]: failed to resolve: could not find `kzg` in `poly`
+       --> src/verifier.rs:5:11
+      
+      
+      
+      
+      error[E0432]: unresolved imports `halo2_proofs::transcript::TranscriptReadBuffer`, `halo2_proofs::transcript::TranscriptWriterBuffer`
+        --> src/prover.rs:11:50
+      
+      
+      
+      
+      
+      
+      help: ... (truncated)
+
+summary:
+  total_steps: 4
+  passed_steps: 3
+  failed_steps: 1
+
+final:
+  available: false
+  notes: "部分关键步骤失败 - Circom:false Proof:false Verify:false"

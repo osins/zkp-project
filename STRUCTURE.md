@@ -12,19 +12,25 @@ zkp-project/
 ├── 📁 rust-prover/                   # Rust 证明生成器（Halo2）
 │   ├── 📄 Cargo.toml                 # Rust 依赖配置
 │   ├── 📄 build_wasm.sh              # WASM 构建脚本
+│   ├── 📄 README.md                  # 模块文档
+│   ├── 📄 CHANGELOG.md               # 更新日志
 │   ├── 📄 .gitignore
 │   │
 │   ├── 📁 src/
-│   │   ├── 📄 main.rs                # 主程序 + WASM 导出
-│   │   ├── 📄 circuit.rs             # Halo2 电路定义（x² = y）
-│   │   ├── 📄 prover.rs              # 证明生成逻辑
-│   │   └── 📄 verifier.rs            # 链下验证逻辑
+│   │   ├── 📄 lib.rs                 # WASM 接口和核心逻辑
+│   │   └── 📄 circuit.rs             # Halo2 电路定义（x² = y）
 │   │
-│   ├── 📁 scripts/
-│   │   └── 📄 generate_keys.rs       # 密钥生成脚本
+│   ├── 📁 test/
+│   │   ├── 📄 test-wasm.js           # 完整测试套件（15个测试）
+│   │   ├── 📄 test-simple.js         # 简单调试测试
+│   │   ├── 📄 README.md              # 测试文档
+│   │   ├── 📄 WASM_TEST_SUCCESS.md   # 测试报告
+│   │   └── 📄 test-results.txt       # 测试结果
 │   │
-│   └── 📁 wasm/
-│       └── 📁 pkg/                   # WASM 输出（wasm-pack 生成）
+│   └── 📁 pkg/                       # WASM 输出（wasm-pack 生成）
+│       ├── 📄 rust_prover.js
+│       ├── 📄 rust_prover_bg.wasm
+│       └── 📄 rust_prover.d.ts
 │
 ├── 📁 circom-circuits/               # Circom 电路
 │   ├── 📄 package.json               # Node 依赖
@@ -106,21 +112,21 @@ zkp-project/
 
 | 模块 | 文件数 | 主要语言 |
 |------|--------|----------|
-| rust-prover | 8 | Rust |
+| rust-prover | 14 | Rust |
 | circom-circuits | 6 | Circom, JavaScript |
 | node-sdk | 10 | TypeScript |
 | smart-contracts | 11 | Solidity, JavaScript |
 | backend | 5 | TypeScript |
-| scripts | 5 | Bash |
-| **总计** | **45+** | 多语言 |
+| scripts | 6 | Bash |
+| **总计** | **52+** | 多语言 |
 
 ## 🔑 关键文件说明
 
 ### Rust Prover
+- `lib.rs`: WASM 接口导出和核心证明/验证逻辑
 - `circuit.rs`: Halo2 电路定义，实现 x² = y 验证
-- `prover.rs`: 生成 ZK proof 的核心逻辑
-- `verifier.rs`: 链下验证 proof
-- `main.rs`: WASM 接口导出
+- `test/test-wasm.js`: 完整的测试套件（15个测试用例）
+- `test/test-simple.js`: 简单调试测试
 
 ### Circom Circuits
 - `example.circom`: Circom 电路，乘法验证（a × b = c）
