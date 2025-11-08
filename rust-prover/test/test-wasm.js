@@ -3,7 +3,24 @@
  * 测试 Halo2 零知识证明的生成和验证功能
  */
 
-const { wasm_generate_proof, wasm_verify_proof } = require('../pkg/rust_prover.js');
+import init, { wasm_generate_proof, wasm_verify_proof, init_panic_hook } from '../pkg/zkp_rust_prover.js';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// 获取当前文件路径
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// 读取 WASM 文件
+const wasmPath = join(__dirname, '../pkg/zkp_rust_prover_bg.wasm');
+const wasmBuffer = readFileSync(wasmPath);
+
+// 初始化 WASM 模块
+await init(wasmBuffer);
+
+// 初始化 panic hook
+init_panic_hook();
 
 console.log('🚀 开始测试 WASM 零知识证明模块...\n');
 

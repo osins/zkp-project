@@ -1,17 +1,24 @@
+// src/circuit.rs - 修复版本
 use halo2_proofs::{
     circuit::{Layouter, SimpleFloorPlanner, Value},
-    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Selector},
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
     pasta::Fp,
+    poly::Rotation,
 };
 
+/// 平方电路配置
 #[derive(Clone, Debug)]
 pub struct SquareConfig {
-    pub x: Column<Advice>,
-    pub y: Column<Advice>,
-    pub s: Selector,
+    pub advice_x: Column<Advice>,
+    pub advice_y: Column<Advice>,
+    pub instance: Column<Instance>,
+    pub selector: Selector,
 }
 
-#[derive(Clone, Debug)]
+/// 平方电路
+/// 
+/// 证明：已知私密值 x，公开值 y = x²
+#[derive(Clone, Debug, Default)]
 pub struct SquareCircuit {
     pub x: Option<Fp>,
 }
@@ -25,24 +32,32 @@ impl Circuit<Fp> for SquareCircuit {
     }
 
     fn configure(meta: &mut ConstraintSystem<Fp>) -> Self::Config {
-        let x = meta.advice_column();
-        let y = meta.advice_column();
-        let s = meta.selector();
+        let advice_x = meta.advice_column();
+        let advice_y = meta.advice_column();
+        let instance = meta.instance_column();
+        let selector = meta.selector();
         
-        // 启用列的相等性约束
-        meta.enable_equality(x);
-        meta.enable_equality(y);
+        // 启用相等性约束
+        meta.enable_equality(advice_x);
+        meta.enable_equality(advice_y);
+        meta.enable_equality(instance);
         
-        // 定义自定义门约束: y = x^2
+        // 定义门约束: y = x²
         meta.create_gate("square", |meta| {
-            let s = meta.query_selector(s);
-            let x = meta.query_advice(x, halo2_proofs::poly::Rotation::cur());
-            let y = meta.query_advice(y, halo2_proofs::poly::Rotation::cur());
+            let s = meta.query_selector(selector);
+            let x = meta.query_advice(advice_x, Rotation::cur());
+            let y = meta.query_advice(advice_y, Rotation::cur());
             
+            // 约束: s * (y - x²) = 0
             vec![s * (y - x.clone() * x)]
         });
         
-        SquareConfig { x, y, s }
+        SquareConfig {
+            advice_x,
+            advice_y,
+            instance,
+            selector,
+        }
     }
 
     fn synthesize(
@@ -50,16 +65,40 @@ impl Circuit<Fp> for SquareCircuit {
         config: Self::Config,
         mut layouter: impl Layouter<Fp>,
     ) -> Result<(), Error> {
-        let x_val = self.x.unwrap_or(Fp::zero());
-
-        layouter.assign_region(
-            || "square",
+        // 分配计算区域并返回 y_cell
+        let y_cell = layouter.assign_region(
+            || "square computation",
             |mut region| {
-                config.s.enable(&mut region, 0)?;
-                region.assign_advice(|| "x", config.x, 0, || Value::known(x_val))?;
-                region.assign_advice(|| "y", config.y, 0, || Value::known(x_val * x_val))?;
-                Ok(())
+                // 启用选择器
+                config.selector.enable(&mut region, 0)?;
+                
+                // 分配 x 值（使用 Value 类型处理可选值）
+                let x_val = Value::known(self.x.unwrap_or(Fp::zero()));
+                region.assign_advice(
+                    || "assign x",
+                    config.advice_x,
+                    0,
+                    || x_val,
+                )?;
+                
+                // 计算 y 值
+                let y_val = x_val.map(|x| x * x);
+                
+                // 分配 y 值
+                let y_cell = region.assign_advice(
+                    || "assign y",
+                    config.advice_y,
+                    0,
+                    || y_val,
+                )?;
+                
+                Ok(y_cell)
             },
-        )
+        )?;
+
+        // 在 region 外部约束到 instance（Halo2 v0.3 标准 API）
+        layouter.constrain_instance(y_cell.cell(), config.instance, 0)?;
+
+        Ok(())
     }
 }

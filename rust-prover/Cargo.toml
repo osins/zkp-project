@@ -1,19 +1,66 @@
 [package]
-name = "rust-prover"
-version = "0.1.0"
+name = "zkp-rust-prover"
+version = "2.0.0"
 edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "Zero-Knowledge Proof prover using Halo2 - Production Ready"
+license = "MIT"
+repository = "https://github.com/osins/zkp-project"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
 
 [lib]
-crate-type = ["cdylib"]
-name = "rust_prover"
-path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-halo2_proofs = { version = "0.3.1", default-features = false, features = ["batch"] }
-halo2curves = { version = "0.9.0", default-features = false, features = ["std", "derive_serde"] }
-rand = "0.8"
-serde = { version = "1.0", features = ["derive"] }
+# Halo2 核心库
+halo2_proofs = { version = "0.3", default-features = false, features = ["batch"] }
+
+# WASM 绑定
 wasm-bindgen = "0.2"
-anyhow = "1.0"
+
+# 随机数生成
+rand = { version = "0.8", default-features = false }
+rand_core = { version = "0.6", default-features = false }
+
+# 序列化支持
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 十六进制编码
+hex = "0.4"
+
+# 错误处理
+console_error_panic_hook = { version = "0.1", optional = true }
+
+[dev-dependencies]
+# 性能测试
+criterion = "0.5"
+
+# WASM 测试
+wasm-bindgen-test = "0.3"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# WASM 专用依赖
 getrandom = { version = "0.2", features = ["js"] }
-console_error_panic_hook = "0.1"
+
+[features]
+default = ["console_error_panic_hook"]
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.release]
+# 发布版本优化配置
+opt-level = 3           # 最高优化级别
+lto = true              # 链接时优化
+codegen-units = 1       # 单个代码生成单元（更好的优化）
+strip = true            # 剥离调试符号
+panic = 'abort'         # panic 时直接中止（减小二进制大小）
+
+[profile.release-with-debug]
+inherits = "release"
+debug = true
+strip = false
