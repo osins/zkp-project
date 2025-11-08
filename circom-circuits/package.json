@@ -30,10 +30,12 @@
     "testTimeout": 30000
   },
   "devDependencies": {
-    "snarkjs": "^0.7.0",
-    "jest": "^29.0.0"
+    "circom_tester": "^0.0.24",
+    "jest": "^29.0.0",
+    "snarkjs": "^0.7.0"
   },
   "dependencies": {
+    "circomlib": "^2.0.5",
     "snarkjs": "^0.7.0"
   },
   "engines": {
