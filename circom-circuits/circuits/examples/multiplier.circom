@@ -36,7 +36,7 @@
 // 最后更新: 2025-11-08
 // ============================================================================
 
-pragma circom 2.0.0;
+// pragma circom 2.0.0; // Commented out for compatibility with circom 0.5.46
 
 template Multiplier() {
     // 私密输入: 第一个因数

@@ -10,6 +10,9 @@
     "generate-proof": "ts-node scripts/generateProof.ts",
     "verify-proof": "ts-node scripts/verifyProof.ts",
     "test": "jest",
+    "test:integration": "ts-node scripts/test-integration.ts",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "clean": "rm -rf dist"
   },
   "keywords": [
