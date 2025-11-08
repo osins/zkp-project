@@ -1,0 +1,17 @@
+{
+  "name": "zkp-circom-circuits",
+  "version": "1.0.0",
+  "description": "Circom circuits for ZKP project",
+  "scripts": {
+    "build": "bash scripts/build_circuit.sh",
+    "test": "node scripts/test_circuit.js",
+    "clean": "rm -rf build/*"
+  },
+  "devDependencies": {
+    "circom": "^2.1.6",
+    "snarkjs": "^0.7.0"
+  },
+  "dependencies": {
+    "snarkjs": "^0.7.0"
+  }
+}

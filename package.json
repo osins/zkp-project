@@ -1,0 +1,38 @@
+{
+  "name": "zkp-project",
+  "version": "1.0.0",
+  "description": "Complete ZKP project template with Rust, Node.js, Circom, and Solidity",
+  "private": true,
+  "workspaces": [
+    "circom-circuits",
+    "node-sdk",
+    "smart-contracts",
+    "backend"
+  ],
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "build:all": "bash scripts/build-all.sh",
+    "build:circuits": "cd circom-circuits && npm run build",
+    "build:rust": "cd rust-prover && cargo build --release",
+    "build:sdk": "cd node-sdk && npm run build",
+    "build:contracts": "cd smart-contracts && npm run compile",
+    "test:all": "bash scripts/test-all.sh",
+    "clean": "bash scripts/clean.sh",
+    "demo": "bash scripts/demo.sh"
+  },
+  "keywords": [
+    "zkp",
+    "zero-knowledge",
+    "circom",
+    "rust",
+    "halo2",
+    "solidity",
+    "blockchain",
+    "cryptography"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,8 @@
+build/
+node_modules/
+*.ptau
+*.r1cs
+*.sym
+*.wasm
+*.wtns
+*.zkey

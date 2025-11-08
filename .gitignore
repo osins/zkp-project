@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+target/
+
+# Build outputs
+dist/
+build/
+artifacts/
+cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Rust
+Cargo.lock
+*.bin
+
+# WASM
+wasm/pkg/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Circom
+*.r1cs
+*.sym
+*.wasm
+*.wtns
+*.zkey
+*.ptau
+
+# Hardhat
+deployments.json
+.env.deployed
+
+# Misc
+coverage/
+.nyc_output/
