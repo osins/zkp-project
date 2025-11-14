@@ -1,8 +1,8 @@
 // src/circuit.rs - 生产级版本
 use halo2_proofs::{
     circuit::{Layouter, SimpleFloorPlanner, Value},
-    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
     pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
     poly::Rotation,
 };
 
@@ -30,9 +30,9 @@ pub struct SquareConfig {
 /// - ✅ 生产级电路（已通过审查）
 ///
 /// ## 电路参数
-/// - **输入（Private）**: 
+/// - **输入（Private）**:
 ///   - `x: Option<Fp>` - 私密输入值
-/// - **输出（Public）**: 
+/// - **输出（Public）**:
 ///   - `y: Fp` - 公开输出 y = x²
 ///
 /// ## 约束
@@ -100,14 +100,14 @@ impl Circuit<Fp> for SquareCircuit {
     type FloorPlanner = SimpleFloorPlanner;
 
     /// 返回不包含 witness 的电路实例
-    /// 
+    ///
     /// 用于生成 proving key 和 verifying key，或者仅获取电路结构
     fn without_witnesses(&self) -> Self {
         Self { x: None }
     }
 
     /// 配置电路约束
-    /// 
+    ///
     /// 定义：
     /// 1. 所需的列（advice_x, advice_y, instance）
     /// 2. 选择器（selector）
@@ -119,26 +119,26 @@ impl Circuit<Fp> for SquareCircuit {
         let advice_y = meta.advice_column();
         let instance = meta.instance_column();
         let selector = meta.selector();
-        
+
         // ✅ 启用相等性约束（生产规范要求）
         // 允许在不同行之间强制相等性，以及约束到 instance
         meta.enable_equality(advice_x);
         meta.enable_equality(advice_y);
         meta.enable_equality(instance);
-        
+
         // ✅ 定义门约束: y = x²（生产规范要求）
         // 当 selector 启用时，约束 y - x² = 0
         meta.create_gate("square", |meta| {
             let s = meta.query_selector(selector);
             let x = meta.query_advice(advice_x, Rotation::cur());
             let y = meta.query_advice(advice_y, Rotation::cur());
-            
+
             // 约束: s * (y - x²) = 0
             // 当 s = 1 时，强制 y = x²
             // 当 s = 0 时，约束自动满足（不检查）
             vec![s * (y - x.clone() * x)]
         });
-        
+
         SquareConfig {
             advice_x,
             advice_y,
@@ -148,7 +148,7 @@ impl Circuit<Fp> for SquareCircuit {
     }
 
     /// 合成电路（分配 witness 并应用约束）
-    /// 
+    ///
     /// 步骤：
     /// 1. 启用 selector
     /// 2. 分配 x 值到 advice_x
@@ -166,33 +166,23 @@ impl Circuit<Fp> for SquareCircuit {
                 // ✅ 启用选择器（生产规范要求）
                 // 在行 0 启用 gate 约束
                 config.selector.enable(&mut region, 0)?;
-                
+
                 // ✅ 使用 Value 类型安全处理 witness（生产规范要求）
                 // 注意：使用 unwrap_or(Fp::zero()) 是合理的，因为：
                 // 1. 在生成密钥时 x 为 None，使用零值不影响约束结构
                 // 2. 在生成证明时 x 必须为 Some，零值也是有效输入
                 let x_val = Value::known(self.x.unwrap_or(Fp::zero()));
-                
+
                 // 分配 x 值到 advice_x[0]
-                region.assign_advice(
-                    || "assign x",
-                    config.advice_x,
-                    0,
-                    || x_val,
-                )?;
-                
+                region.assign_advice(|| "assign x", config.advice_x, 0, || x_val)?;
+
                 // 计算 y = x²
                 // map 确保如果 x 是 unknown，y 也是 unknown
                 let y_val = x_val.map(|x| x * x);
-                
+
                 // 分配 y 值到 advice_y[0]
-                let y_cell = region.assign_advice(
-                    || "assign y",
-                    config.advice_y,
-                    0,
-                    || y_val,
-                )?;
-                
+                let y_cell = region.assign_advice(|| "assign y", config.advice_y, 0, || y_val)?;
+
                 Ok(y_cell)
             },
         )?;
@@ -211,16 +201,18 @@ mod tests {
     use super::*;
     use halo2_proofs::{
         pasta::EqAffine,
-        poly::commitment::Params,
         plonk::{create_proof, keygen_pk, keygen_vk, verify_proof, SingleVerifier},
-        transcript::{Blake2bWrite, Blake2bRead, Challenge255},
+        poly::commitment::Params,
+        transcript::{Blake2bRead, Blake2bWrite, Challenge255},
     };
     use rand_core::OsRng;
 
     /// 测试：without_witnesses 应该返回无 witness 的电路
     #[test]
     fn test_without_witnesses() {
-        let circuit = SquareCircuit { x: Some(Fp::from(5)) };
+        let circuit = SquareCircuit {
+            x: Some(Fp::from(5)),
+        };
         let no_witness = circuit.without_witnesses();
         assert_eq!(no_witness.x, None);
     }
@@ -234,41 +226,50 @@ mod tests {
 
         // 1. 生成参数
         let params = Params::<EqAffine>::new(k);
-        
+
         // 2. 生成密钥
         let empty_circuit = SquareCircuit { x: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk.clone(), &empty_circuit).unwrap();
-        
+
         // 3. 生成真实证明
         let circuit = SquareCircuit { x: Some(x) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![y]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty(), "Proof should not be empty");
-        
+
         // 4. 验证真实证明
         let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
         let strategy = SingleVerifier::new(&params);
-        
+
         let result = verify_proof(
             &params,
             &vk,
             strategy,
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut transcript,
         );
-        
+
         assert!(result.is_ok(), "Proof verification should succeed");
     }
 
@@ -283,21 +284,26 @@ mod tests {
         let empty_circuit = SquareCircuit { x: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk, &empty_circuit).unwrap();
-        
+
         let circuit = SquareCircuit { x: Some(x) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![y]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
     }
 
@@ -312,21 +318,26 @@ mod tests {
         let empty_circuit = SquareCircuit { x: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk, &empty_circuit).unwrap();
-        
+
         let circuit = SquareCircuit { x: Some(x) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![y]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
     }
 }

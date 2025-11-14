@@ -14,8 +14,8 @@
 
 use halo2_proofs::{
     circuit::{Layouter, SimpleFloorPlanner, Value},
-    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance},
     pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance},
 };
 
 #[derive(Clone, Debug)]
@@ -45,10 +45,10 @@ impl Circuit<Fp> for MerkleProofCircuit {
     fn configure(meta: &mut ConstraintSystem<Fp>) -> Self::Config {
         let advice = meta.advice_column();
         let instance = meta.instance_column();
-        
+
         meta.enable_equality(advice);
         meta.enable_equality(instance);
-        
+
         MerkleProofConfig { advice, instance }
     }
 
@@ -80,8 +80,8 @@ mod tests {
     use super::*;
     use halo2_proofs::{
         pasta::EqAffine,
-        poly::commitment::Params,
         plonk::{create_proof, keygen_pk, keygen_vk},
+        poly::commitment::Params,
         transcript::{Blake2bWrite, Challenge255},
     };
     use rand_core::OsRng;
@@ -99,20 +99,25 @@ mod tests {
         let empty_circuit = MerkleProofCircuit::default();
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk, &empty_circuit).unwrap();
-        
+
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![root]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
     }
 }

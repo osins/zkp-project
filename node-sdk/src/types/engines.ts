@@ -195,8 +195,8 @@ export const CIRCUIT_ENGINE_COMPATIBILITY: Record<CircuitType, ProofEngine[]> = 
     // 生产电路（Circom 完整实现，Halo2 部分实现）
     [CircuitType.RANGE_PROOF]: [ProofEngine.CIRCOM, ProofEngine.HALO2],
     [CircuitType.MERKLE_PROOF]: [ProofEngine.CIRCOM],  // Halo2 仅基础框架
-    [CircuitType.AGE_VERIFICATION]: [ProofEngine.CIRCOM],  // Halo2 仅基础框架
-    [CircuitType.BALANCE_PROOF]: [ProofEngine.CIRCOM],  // Halo2 仅基础框架
+    [CircuitType.AGE_VERIFICATION]: [ProofEngine.CIRCOM, ProofEngine.HALO2],  // ✅ Halo2 已完整实现
+    [CircuitType.BALANCE_PROOF]: [ProofEngine.CIRCOM, ProofEngine.HALO2],  // ✅ Halo2 已完整实现
     [CircuitType.VOTING]: [ProofEngine.CIRCOM]  // Halo2 仅基础框架
 };
 

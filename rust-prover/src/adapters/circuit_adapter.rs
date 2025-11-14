@@ -59,7 +59,11 @@ impl CircuitAdapter {
             CircuitType::AgeVerification => CircuitInfo {
                 name: "AgeVerification".to_string(),
                 description: "证明年龄在范围内".to_string(),
-                inputs: vec!["age".to_string(), "minAge".to_string(), "maxAge".to_string()],
+                inputs: vec![
+                    "age".to_string(),
+                    "minAge".to_string(),
+                    "maxAge".to_string(),
+                ],
                 outputs: vec!["valid".to_string()],
                 status: "Basic Framework".to_string(),
             },

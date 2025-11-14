@@ -17,8 +17,8 @@
 
 use halo2_proofs::{
     circuit::{Layouter, SimpleFloorPlanner, Value},
-    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Expression, Instance, Selector},
     pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Expression, Instance, Selector},
     poly::Rotation,
 };
 
@@ -74,7 +74,7 @@ impl<const N: usize> Circuit<Fp> for RangeProofCircuit<N> {
         meta.create_gate("bit check", |meta| {
             let s = meta.query_selector(bit_selector);
             let bit = meta.query_advice(bits, Rotation::cur());
-            
+
             // 当 s = 1 时, 强制 bit = 0 或 1
             vec![s * bit.clone() * (Expression::Constant(Fp::one()) - bit)]
         });
@@ -93,21 +93,14 @@ impl<const N: usize> Circuit<Fp> for RangeProofCircuit<N> {
         config: Self::Config,
         mut layouter: impl Layouter<Fp>,
     ) -> Result<(), Error> {
-        let value_fp = Value::known(
-            Fp::from(self.value.unwrap_or(0))
-        );
+        let value_fp = Value::known(Fp::from(self.value.unwrap_or(0)));
 
         // 分配并分解值
         let (value_cell, _bits_cells) = layouter.assign_region(
             || "range proof",
             |mut region| {
                 // 分配原始值
-                let value_cell = region.assign_advice(
-                    || "value",
-                    config.value,
-                    0,
-                    || value_fp,
-                )?;
+                let value_cell = region.assign_advice(|| "value", config.value, 0, || value_fp)?;
 
                 let mut bit_cells = vec![];
                 let val = self.value.unwrap_or(0);
@@ -115,7 +108,7 @@ impl<const N: usize> Circuit<Fp> for RangeProofCircuit<N> {
                 // 分解并验证每一位
                 for i in 0..N {
                     config.bit_selector.enable(&mut region, i + 1)?;
-                    
+
                     let bit = (val >> i) & 1;
                     let bit_cell = region.assign_advice(
                         || format!("bit {}", i),
@@ -135,14 +128,14 @@ impl<const N: usize> Circuit<Fp> for RangeProofCircuit<N> {
             || "reconstruct check",
             |mut region| {
                 config.recon_selector.enable(&mut region, 0)?;
-                
+
                 // 计算重构值
                 let mut reconstructed = 0u64;
                 for i in 0..N {
                     let bit = (self.value.unwrap_or(0) >> i) & 1;
                     reconstructed += bit << i;
                 }
-                
+
                 // 验证重构值等于原值
                 let recon_cell = region.assign_advice(
                     || "reconstructed",
@@ -150,29 +143,29 @@ impl<const N: usize> Circuit<Fp> for RangeProofCircuit<N> {
                     1,
                     || Value::known(Fp::from(reconstructed)),
                 )?;
-                
+
                 region.constrain_equal(value_cell.cell(), recon_cell.cell())?;
-                
+
                 Ok(())
             },
         )?;
 
         // 输出结果: valid = 1 (如果能走到这里说明验证通过)
-        layouter.assign_region(
-            || "output",
-            |mut region| {
-                let valid_cell = region.assign_advice(
-                    || "valid",
-                    config.value,
-                    0,
-                    || Value::known(Fp::one()),
-                )?;
-                
-                Ok(valid_cell)
-            },
-        ).and_then(|cell| {
-            layouter.constrain_instance(cell.cell(), config.instance, 0)
-        })?;
+        layouter
+            .assign_region(
+                || "output",
+                |mut region| {
+                    let valid_cell = region.assign_advice(
+                        || "valid",
+                        config.value,
+                        0,
+                        || Value::known(Fp::one()),
+                    )?;
+
+                    Ok(valid_cell)
+                },
+            )
+            .and_then(|cell| layouter.constrain_instance(cell.cell(), config.instance, 0))?;
 
         Ok(())
     }
@@ -189,8 +182,8 @@ mod tests {
     use super::*;
     use halo2_proofs::{
         pasta::EqAffine,
-        poly::commitment::Params,
         plonk::{create_proof, keygen_pk, keygen_vk, verify_proof, SingleVerifier},
+        poly::commitment::Params,
         transcript::{Blake2bRead, Blake2bWrite, Challenge255},
     };
     use rand_core::OsRng;
@@ -199,28 +192,33 @@ mod tests {
     fn test_range_proof_8bit_real() {
         let k = 8;
         let value = 100u64;
-        
+
         let params = Params::<EqAffine>::new(k);
         let empty_circuit = RangeProofCircuit::<8> { value: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk.clone(), &empty_circuit).unwrap();
-        
+
         let circuit = RangeProofCircuit::<8> { value: Some(value) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![Fp::one()]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
-        
+
         // 验证
         let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
         let strategy = SingleVerifier::new(&params);
@@ -228,7 +226,11 @@ mod tests {
             &params,
             &vk,
             strategy,
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut transcript,
         );
         assert!(result.is_ok());
@@ -238,26 +240,31 @@ mod tests {
     fn test_range_proof_8bit_boundary_real() {
         let k = 8;
         let value = 255u64;
-        
+
         let params = Params::<EqAffine>::new(k);
         let empty_circuit = RangeProofCircuit::<8> { value: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk.clone(), &empty_circuit).unwrap();
-        
+
         let circuit = RangeProofCircuit::<8> { value: Some(value) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![Fp::one()]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
     }
 
@@ -265,26 +272,31 @@ mod tests {
     fn test_range_proof_16bit_real() {
         let k = 10;
         let value = 30000u64;
-        
+
         let params = Params::<EqAffine>::new(k);
         let empty_circuit = RangeProofCircuit::<16> { value: None };
         let vk = keygen_vk(&params, &empty_circuit).unwrap();
         let pk = keygen_pk(&params, vk.clone(), &empty_circuit).unwrap();
-        
+
         let circuit = RangeProofCircuit::<16> { value: Some(value) };
         let mut proof = vec![];
         let mut transcript = Blake2bWrite::<_, _, Challenge255<_>>::init(&mut proof);
         let instances = vec![vec![Fp::one()]];
-        
+
         create_proof(
             &params,
             &pk,
             &[circuit],
-            &[instances.iter().map(|i| i.as_slice()).collect::<Vec<_>>().as_slice()],
+            &[instances
+                .iter()
+                .map(|i| i.as_slice())
+                .collect::<Vec<_>>()
+                .as_slice()],
             &mut OsRng,
             &mut transcript,
-        ).unwrap();
-        
+        )
+        .unwrap();
+
         assert!(!proof.is_empty());
     }
 }

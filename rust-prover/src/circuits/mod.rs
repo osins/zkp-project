@@ -10,17 +10,17 @@
 // 5. MerkleProofCircuit - 默克尔树证明电路
 // 6. VotingCircuit - 投票电路
 
-pub mod square;
 pub mod age_verification;
 pub mod balance_proof;
-pub mod range_proof;
 pub mod merkle_proof;
+pub mod range_proof;
+pub mod square;
 pub mod voting;
 
 // 重新导出常用类型
-pub use square::SquareCircuit;
 pub use age_verification::AgeVerificationCircuit;
 pub use balance_proof::BalanceProofCircuit;
-pub use range_proof::RangeProofCircuit;
 pub use merkle_proof::MerkleProofCircuit;
+pub use range_proof::RangeProofCircuit;
+pub use square::SquareCircuit;
 pub use voting::VotingCircuit;

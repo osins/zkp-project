@@ -55,20 +55,26 @@ export class RustProver {
         }
         
         // 根据电路类型处理输入
-        let proofData: Uint8Array;
-        let publicSignals: Record<string, string>;
+        let proofData: Uint8Array | string;
+        let publicSignals: Record<string, string> | string[];
         
         switch (this.circuitType) {
             case CircuitType.SQUARE:
                 proofData = await this.generateSquareProof(input);
-                publicSignals = this.extractSquarePublicSignals(proofData, input);
+                publicSignals = this.extractSquarePublicSignals(proofData as Uint8Array, input);
+                break;
+                
+            case CircuitType.AGE_VERIFICATION:
+                const ageResult = await this.generateAgeVerificationProof(input);
+                proofData = ageResult.proof;
+                publicSignals = ageResult.publicSignals;
                 break;
                 
             // 其他电路类型（未来扩展）
             default:
                 throw new Error(
                     `电路 ${this.circuitType} 的 Halo2 实现尚未完成。\n` +
-                    `当前仅支持: SQUARE\n` +
+                    `当前支持: SQUARE, AGE_VERIFICATION\n` +
                     `建议: 使用 Circom 引擎代替`
                 );
         }
@@ -81,14 +87,19 @@ export class RustProver {
             console.log(`[Halo2] 证明大小: ${proofData.length} bytes`);
         }
         
+        // 计算证明大小
+        const proofSize = typeof proofData === 'string' 
+            ? proofData.length / 2  // hex 字符串
+            : proofData.length;     // Uint8Array
+        
         return {
             engine: ProofEngine.HALO2,
             circuitType: this.circuitType,
-            proof: Array.from(proofData),  // 转为数组便于序列化
+            proof: typeof proofData === 'string' ? proofData : Array.from(proofData),
             publicSignals,
             metadata: {
                 generationTime,
-                proofSize: proofData.length,
+                proofSize,
                 timestamp: Date.now()
             }
         };
@@ -130,6 +141,40 @@ export class RustProver {
             x: x.toString(),
             y: yExpected.toString(),
             y_hex: yHex
+        };
+    }
+    
+    /**
+     * 生成 AgeVerification 电路证明
+     */
+    private async generateAgeVerificationProof(input: CircuitInput): Promise<{
+        proof: string;
+        publicSignals: string[];
+    }> {
+        // 验证必要参数
+        if (!input.age || !input.salt || !input.minAge || !input.maxAge) {
+            throw new Error('AgeVerification 电路需要: age, salt, minAge, maxAge');
+        }
+        
+        const age = Number(input.age);
+        const minAge = Number(input.minAge);
+        const maxAge = Number(input.maxAge);
+        const salt = String(input.salt);
+        
+        // 调用 WasmLoader 的 generateAgeProof 方法
+        const resultJson = await this.wasmLoader.generateAgeProof(
+            age,
+            salt,
+            minAge,
+            maxAge
+        );
+        
+        // 解析 JSON 结果
+        const result = JSON.parse(resultJson);
+        
+        return {
+            proof: result.proof,
+            publicSignals: result.publicSignals
         };
     }
     
